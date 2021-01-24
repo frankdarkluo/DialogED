@@ -1,0 +1,59 @@
+[
+ [
+  [
+   "speaker 1: I am in the mountains of southwest Pennsylvania or hills right now, so I hope I don't lose you.",
+   "speaker 2: I'd say that part of the drive is so incredible because suddenly you really are not in the Midwest.",
+   "speaker 1: Right. The houses get older and the land gets a little more diverse than it was.",
+   "speaker 2: Yeah. There's hills suddenly.",
+   "speaker 1: Yeah. Right. Not flat, I guess, in other words.",
+   "speaker 2: Yeah. And describe the scene. Explain who's with each other right there in the truck.",
+   "speaker 1: Yeah, we are in a GMC pickup with a U-Haul trailer on the back of it. My dad's driving. My younger brother's in here, as well.",
+   "speaker 2: And explain why you're going to DC.",
+   "speaker 1: I'm going because I am the press secretary for an incoming congressman."
+  ],
+  [
+   {
+    "trigger_word": "drive",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "explain",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "press secretary",
+    "sent_id": 8
+   }
+  ],
+  {
+   "title": "TAL_608_the_revolution_starts_at_noon"
+  }
+ ],
+ [
+  [
+   "speaker 1: I didn't realize I had that many ties till I went to pack. I would say probably 30 to 40 ties.",
+   "speaker 2: Oh, wow. You own more than I do.",
+   "speaker 1: Well, last Christmas I asked to be a member of the Tie of the Month club.",
+   "speaker 2: Now, I'm no expert on being a press secretary, but from seeing them on TV, it just seems like you could get by with like four ties blue, red, blue stripe, red stripe.",
+   "speaker 1: Right. I get really self-conscious about wearing the same tie like more than once in a couple weeks. I also just really like ties."
+  ],
+  [
+   {
+    "trigger_word": "had",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "pack",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "being a press secretary",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "self-conscious",
+    "sent_id": 4
+   }
+  ]
+ ]
+]
