@@ -1445,7 +1445,7 @@ def main(args):
         eval_dataloader = DataLoader(eval_data, sampler=eval_sampler, batch_size=args.eval_batch_size)
 
     if args.do_train:
-        best_f1 = 0
+        best_metric = 0
         if args.encoder_type == 'LSTM':
             if args.task_name=='lstm':
                 train_features = convert_examples_to_feats_lstm(train_examples, args.max_seq_length, vocab,
@@ -1453,7 +1453,6 @@ def main(args):
             elif args.task_name=="lstmf1c":
                 train_features = convert_examples_to_feats_lstm(train_examples, args.max_seq_length, vocab,
                                                                 args.train_feat_c_pkl, args.language)
-
 
             train_data = read_lstm_features(train_features)
         else:
@@ -1563,9 +1562,9 @@ def main(args):
                    
             print("dev_f1 = {:.4f}, dev_p ={:.4f}, dev_r ={:.4f}".format(dev_f1, dev_p, dev_r))
             if args.f1eval:
-                if dev_f1 >= best_f1:
+                if dev_f1 >= best_metric:
                     torch.save(model.state_dict(), os.path.join(args.output_dir, "model_best.pt"))
-                    best_f1 = dev_f1
+                    best_metric = dev_f1
                     result = {'f1': dev_f1}
                     result['precision']=dev_p
                     result['dev_r']=dev_r
@@ -1573,6 +1572,10 @@ def main(args):
                     logger.info(" f1 = %s", str(result['f1']))
                     with open(os.path.join(args.output_dir, 'dev_result.json'), 'w', encoding='utf8') as of:
                         json.dump(result, of, indent=2, ensure_ascii=False)
+            else:
+                if dev_p >= best_metric:
+                    torch.save(model.state_dict(), os.path.join(args.output_dir, "model_best.pt"))
+                    best_metric = eval_accuracy
 
         model.load_state_dict(torch.load(os.path.join(args.output_dir, "model_best.pt")))
         torch.save(model.state_dict(), os.path.join(args.output_dir, "model.pt"))
