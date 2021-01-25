@@ -39,10 +39,10 @@ logger = logging.getLogger(__name__)
 # torch.cuda.set_device(0)
 
 base_nlp = spacy.load('en_core_web_sm')
+ 
 
 
-
-
+                      
 class Span:
 
     def __init__(self, left, right, type):
@@ -58,8 +58,11 @@ class Span:
 
     def to_str(self, sent):
         return str(sent[self.left: (self.right+1)]) + ","+self.type
-def evaluate_num(batch_pred_ids, batch_gold_ids, input_mask, idx2label):
 
+def evaluate_num(batch_pred_ids, batch_gold_ids, input_mask, idx2label):
+    
+    batch_gold_ids = batch_gold_ids.squeeze()
+    
     word_seq_lens = input_mask.squeeze().sum(1)
     """
     evaluate the batch of instances
@@ -76,13 +79,14 @@ def evaluate_num(batch_pred_ids, batch_gold_ids, input_mask, idx2label):
     word_seq_lens = word_seq_lens.tolist()
     for idx in range(len(batch_pred_ids)):
         length = word_seq_lens[idx]
-
+        
         output = batch_gold_ids[idx][:length].tolist()
+        
         prediction = batch_pred_ids[idx][:length].tolist()
-
+        
         output = [idx2label[l] for l in output]
         prediction =[idx2label[l] for l in prediction]
-
+       
         #convert to span
         output_spans = set()
         start = -1
@@ -109,10 +113,10 @@ def evaluate_num(batch_pred_ids, batch_gold_ids, input_mask, idx2label):
         p += len(predict_spans.intersection(output_spans))
 
     return np.asarray([p, total_predict, total_entity], dtype=int)
-
+                      
 def map_label_to_ids(labels=None):
     label_id_map = constant.EVENT_TO_ID
-
+    
     label_list=[]
     complete_map = {}
     index = 0
@@ -139,10 +143,10 @@ def map_label_to_ids(labels=None):
     ids = map_to_ids(labels, complete_map)
     return ids
 id2label = map_label_to_ids()
-
-
-
-
+     
+           
+            
+    
 
 class InputExample(object):
     """A single training/test example for simple sequence classification."""
@@ -178,7 +182,7 @@ class InputFeatures(object):
         self.segment_ids = segment_ids
         self.label_id = label_id
         self.pos_ids = pos_ids
-
+        
 
 
 class DataProcessor(object):
@@ -216,15 +220,15 @@ class gloveLSTMProcessor(DataProcessor):
                 data = json.load(f)
             if sid == 0:
                 random.shuffle(data)
-
+                
             for i in range(len(data)):
                 text = ' '.join(data[i][0]).lower()
                 nlp_text = base_nlp(text)
-
+                      
                 utters_len = []
                 for t in data[i][0]:
                     utters_len.append(len(base_nlp(t)))
-
+                            
                 labels = ['O' for i in range(len(nlp_text))]
                 for j in range(len(data[i][1])):
                     sent_id = data[i][1][j]['sent_id']
@@ -255,7 +259,7 @@ class gloveLSTMProcessor(DataProcessor):
                             labels[sum(utters_len[:sent_id])+offset[1]] = "E-" + e_type
                             for m in range(sum(utters_len[:sent_id])+offset[0]+1, sum(utters_len[:sent_id])+offset[1]):
                                 labels[m] = "I-" + e_type
-
+                
                 d = [text, labels]
                 self.D[sid] += [d]
         logger.info(str(len(self.D[0])) + "," + str(len(self.D[1])) + "," + str(len(self.D[2])))
@@ -816,14 +820,14 @@ def convert_examples_to_feats_lstm(examples, max_seq_length, glove_vocab, feat_f
             nlp = spacy.load("zh_core_web_md")
         for (ex_index, example) in enumerate(examples):
             abandon = False
-
+            
             dialog = nlp(example.text_a)
             dialog_tokens = [token.text for token in dialog]
             dialog_pos = [token.tag_ for token in dialog]
-
+                      
             #label to id
             label_ids = map_label_to_ids(example.label)
-
+            
 #             print(dialog_tokens)
 #             print(label_ids)
 #             print(len(dialog_tokens))
@@ -838,21 +842,21 @@ def convert_examples_to_feats_lstm(examples, max_seq_length, glove_vocab, feat_f
             input_ids = glove_vocab.map(dialog_tokens)
             # convert pos to index
             pos_ids = map_to_ids(dialog_pos, constant.POS_TO_ID)
-
+            
 
             # The mask has 1 for real tokens and 0 for padding tokens. Only real
             # tokens are attended to.
             input_mask = [1] * len(input_ids)
             segment_ids = [0] * len(input_ids)  # actually not used
-
+            
             # Zero-pad up to the sequence length.
             while len(input_ids) < max_seq_length:
                 input_ids.append(0)
                 input_mask.append(0)
                 segment_ids.append(0)
                 pos_ids.append(0)
-                label_ids.append(-100)
-
+                label_ids.append(0)
+            
             assert len(input_ids) == max_seq_length
             assert len(input_mask) == max_seq_length
             assert len(segment_ids) == max_seq_length
@@ -1236,219 +1240,29 @@ def read_lstm_features(features):
         segment_ids.append([])
         pos_ids.append([])
         label_id.append([])
-
+        
         for i in range(1):
             input_ids[-1].append(f[i].input_ids)
             input_mask[-1].append(f[i].input_mask)
             segment_ids[-1].append(f[i].segment_ids)
             pos_ids[-1].append(f[i].pos_ids)
             label_id[-1].append([f[i].label_id])
-
+            
 
     all_input_ids = torch.tensor(input_ids, dtype=torch.long)
     all_input_mask = torch.tensor(input_mask, dtype=torch.long)
     all_segment_ids = torch.tensor(segment_ids, dtype=torch.long)
     all_label_ids = torch.tensor(label_id, dtype=torch.long)
     all_pos_ids = torch.tensor(pos_ids, dtype=torch.long)
-
+    
 
     data = TensorDataset(all_input_ids, all_input_mask, all_segment_ids, all_label_ids, all_pos_ids)
 
     return data
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--event_type_num",
-                        default=29,
-                        type=int,
-                        help="numbers of event type")
-    parser.add_argument("--data_dir",
-                        default='.',
-                        type=str,
-                        # required=True,
-                        help="The input data dir. Should contain the .tsv files (or other data files) for the task.")
-    parser.add_argument("--bert_config_file",
-                        default='../bert_base/bert_config.json',
-                        type=str,
-                        # required=True,
-                        help="The config json file corresponding to the pre-trained BERT model. \n"
-                             "This specifies the model architecture.")
-    parser.add_argument("--task_name",
-                        default='bert',
-                        type=str,
-                        # required=True,
-                        help="The name of the task to train.")
-    parser.add_argument("--vocab_file",
-                        default='../bert_base/vocab.txt',
-                        type=str,
-                        # required=True,
-                        help="The vocabulary file that the BERT model was trained on.")
-    parser.add_argument("--output_dir",
-                        default='lstm_f1',
-                        type=str,
-                        # required=True,
-                        help="The output directory where the model checkpoints will be written.")
-    parser.add_argument("--init_checkpoint",
-                        default='../bert_base/pytorch_model.bin',
-                        type=str,
-                        help="Initial checkpoint (usually from a pre-trained BERT model).")
-    parser.add_argument("--do_lower_case",
-                        default=False,
-                        action='store_true',
-                        help="Whether to lower case the input text. True for uncased models, False for cased models.")
-    parser.add_argument("--max_seq_length",
-                        default=512,
-                        type=int,
-                        help="The maximum total input sequence length after WordPiece tokenization. \n"
-                             "Sequences longer than this will be truncated, and sequences shorter \n"
-                             "than this will be padded.")
-    parser.add_argument("--do_train",
-                        default=True,
-                        action='store_true',
-                        help="Whether to run training.")
-    parser.add_argument("--do_eval",
-                        default=True,
-                        action='store_true',
-                        help="Whether to run eval on the dev set.")
-    parser.add_argument("--train_batch_size",
-                        default=20,
-                        type=int,
-                        help="Total batch size for training.")
-    parser.add_argument("--eval_batch_size",
-                        default=4,
-                        type=int,
-                        help="Total batch size for eval.")
-    parser.add_argument("--learning_rate",
-                        default=0.1,
-                        type=float,
-                        help="The initial learning rate for Adam.")
-    parser.add_argument("--num_train_epochs",
-                        default=40.0,
-                        type=float,
-                        help="Total number of training epochs to perform.")
-    parser.add_argument("--warmup_proportion",
-                        default=0.1,
-                        type=float,
-                        help="Proportion of training to perform linear learning rate warmup for. "
-                             "E.g., 0.1 = 10%% of training.")
-    parser.add_argument("--save_checkpoints_steps",
-                        default=1000,
-                        type=int,
-                        help="How often to save the model checkpoint.")
-    parser.add_argument("--no_cuda",
-                        default=False,
-                        action='store_true',
-                        help="Whether not to use CUDA when available")
-    parser.add_argument("--local_rank",
-                        type=int,
-                        default=-1,
-                        help="local_rank for distributed training on gpus")
-    parser.add_argument('--seed',
-                        type=int,
-                        default=0,
-                        help="random seed for initialization")
+def main(args):
 
-    parser.add_argument('--pooling_ratio', type=float, default=0.3,
-                        help='pooling ratio')
-    parser.add_argument('--pool_dropout_ratio', type=float, default=0.5,
-                        help='dropout ratio')
-    parser.add_argument('--rnn_hidden_size',
-                        type=int,
-                        default=150,
-                        help="Hidden_size for rnn")
-    parser.add_argument('--graph_hidden_size',
-                        type=int,
-                        default=300,
-                        help="Hidden_size for graph")
-    parser.add_argument('--input_dropout',
-                        type=float, default=0.5,
-                        help='Dropout rate for word representation.')
-    parser.add_argument('--num_graph_layers',
-                        type=int,
-                        default=2,
-                        help="Number of blocks for graph")
-    parser.add_argument('--heads', type=int, default=3, help='Num of heads in multi-head attention.')
-    parser.add_argument('--sublayer_first', type=int, default=2, help='Num of the first sublayers in dcgcn block.')
-    parser.add_argument('--sublayer_second', type=int, default=4, help='Num of the second sublayers in dcgcn block.')
-    parser.add_argument('--gcn_dropout', type=float, default=0.5, help='AGGCN layer dropout rate.')
-    parser.add_argument('--lamada', type=float, default=0.000001, help='Weights for DTW Loss.')
-    parser.add_argument('--max_offset', type=int, default=4, help='Length of max_offset.')
-
-    parser.add_argument('--gradient_accumulation_steps',
-                        type=int,
-                        default=1,
-                        help="Number of updates steps to accumualte before performing a backward/update pass.")
-    parser.add_argument('--optimize_on_cpu',
-                        default=False,
-                        action='store_true',
-                        help="Whether to perform optimization and keep the optimizer averages on CPU")
-    parser.add_argument('--fp16',
-                        default=False,
-                        action='store_true',
-                        help="Whether to use 16-bit float precision instead of 32-bit")
-    parser.add_argument('--loss_scale',
-                        type=float, default=128,
-                        help='Loss scaling, positive power of 2 values can improve fp16 convergence.')
-    parser.add_argument("--resume",
-                        default=False,
-                        action='store_true',
-                        help="Whether to resume the training.")
-    parser.add_argument("--f1eval",
-                        default=True,
-                        action='store_true',
-                        help="Whether to use f1 for dev evaluation during training.")
-    # lsc
-    parser.add_argument('--glove_f', type=str, default='data/glove.6B.300d.txt')
-    parser.add_argument('--embed_dim', type=int, default=300, help='Word embedding dimension.')
-    parser.add_argument('--encoder_type', type=str, default='LSTM', help='Bert or LSTM')
-    parser.add_argument('--embed_f', type=str, default='data/embeddings.npy')
-    parser.add_argument('--min_freq', type=int, default=1, help='Minimal word frequency for builiding vocab')
-    parser.add_argument('--tune_topk', type=int, default=1e10, help='Only finetune top N word embeddings.')
-    parser.add_argument('--lstm_layers', type=int, default=1, help='Number of lstm layers')
-    parser.add_argument('--lstm_dropout', type=int, default=0.2, help='dropout rate of lstm')
-    parser.add_argument("--lstm_only", default=False, action='store_true', help="Whether to only use BiLSTM")
-    parser.add_argument('--weight_decay', type=float, default=0.2, help='dropout rate of lstm')
-    # ngs
-    parser.add_argument('--token_pkl', type=str, default='data/token_pkl', help='pickle file for all tokens')
-    parser.add_argument('--vocab_pkl', type=str, default='data/vocab_pkl', help='pickle file for vocab')
-    parser.add_argument('--vocab_ct_pkl', type=str, default='data/vocab_ct_pkl', help='pickle file for vocab counter')
-    parser.add_argument('--train_feat_pkl', type=str, default='data/train_feat_pkl', help='pickle file for train')
-    parser.add_argument('--eval_feat_pkl', type=str, default='data/eval_feat_pkl', help='pickle file for eval')
-    parser.add_argument('--test_feat_pkl', type=str, default='data/test_feat_pkl', help='pickle file for test')
-    parser.add_argument('--train_feat_c_pkl', type=str, default='data/train_feat_c_pkl', help='pickle file for train')
-    parser.add_argument('--eval_feat_c_pkl', type=str, default='data/eval_feat_c_pkl', help='pickle file for eval')
-    parser.add_argument('--test_feat_c_pkl', type=str, default='data/test_feat_c_pkl', help='pickle file for test')
-
-    parser.add_argument('--num_layer', type=int, default=1, help='layer number for latent structure')
-    parser.add_argument('--first_layer', type=int, default=2, help='first layer')
-    parser.add_argument('--second_layer', type=int, default=3, help='second layer')
-    parser.add_argument('--latent_dropout', type=float, default=0.2, help="dropout for latent structure")
-    parser.add_argument('--diff_mlp_hidden', type=int, default=128, help="MLP inter-mediate hidden size")
-    parser.add_argument('--diff_position', type=int, default=500, help="max position number")
-    parser.add_argument('--latent_heads', type=int, default=4, help="heads for multihead attention")
-
-    parser.add_argument('--dropout_rate', type=float, default=0.3, help="dropout rate for classifier")
-    parser.add_argument('--rm_stopwords', type=bool, default=False, help='Remove stopwords in global word Node')
-
-    parser.add_argument('--latent_type', type=str, default='None',
-                        help="['None','hardkuma', 'diffmask', 'aggcn', 'hardkuma_binary','gdp', 'lsr']")
-    parser.add_argument('--extract_node_id', type=bool, default=True, help='extract node id')
-
-    parser.add_argument('--l0_reg', type=bool, default=True, help='l0 regualrization')
-    parser.add_argument('--speaker_reg', type=bool, default=True, help='speaker-related regualrization')
-    parser.add_argument('--lasso_reg', type=bool, default=False, help='sparsity regualrization')
-    parser.add_argument('--alpha', type=float, default=0.01, help="weight for l0")
-    parser.add_argument('--beta', type=float, default=0.01, help="weight for speaker reg")
-    parser.add_argument('--gamma', type=float, default=0.01, help="weight for lasso reg")
-
-    parser.add_argument('--lsr_num_layer', type=int, default=2, help="number of lsr layer")
-
-    # lgq
-    parser.add_argument('--language', type=str, default='en', help="en | cn ")
-    parser.add_argument('--dataset', type=str, default='dialogre', help="dialogre | mie ")
-
-    args = parser.parse_args()
 
     print(args)
 
@@ -1462,11 +1276,12 @@ def main():
         "roberta": robertaProcessor,
         "robertaf1c": robertaf1cProcessor
     }
-
+    
     if args.local_rank == -1 or args.no_cuda:
         device = torch.device("cuda" if torch.cuda.is_available() and not args.no_cuda else "cpu")
         n_gpu = torch.cuda.device_count()
     else:
+        
         device = torch.device("cuda", args.local_rank)
         n_gpu = 1
         # Initializes the distributed backend which will take care of sychronizing nodes/GPUs
@@ -1504,6 +1319,14 @@ def main():
             raise ValueError("Output directory ({}) already exists and is not empty.".format(args.output_dir))
     else:
         os.makedirs(args.output_dir, exist_ok=True)
+
+    if args.do_train:
+        logger.addHandler(logging.FileHandler(os.path.join(args.output_dir, "train.log"), 'w'))
+    else:
+        logger.addHandler(logging.FileHandler(os.path.join(args.output_dir, "eval.log"), 'w'))
+    logger.info(args)
+    logger.info("device: {}, n_gpu: {}, 16-bits training: {}".format(
+        device, n_gpu, args.fp16))
 
     task_name = args.task_name.lower()
 
@@ -1561,13 +1384,14 @@ def main():
             logger.info("dumping embedding file ...")
             np.save(args.embed_f, embedding)
 
-    model = MainSequenceClassification(bert_config, args.event_type_num, vocab, args)
+    model = MainSequenceClassification(bert_config, 12, vocab, args)
     if args.task_name == 'bert' or args.task_name == 'bertf1c':
         if args.init_checkpoint is not None:
             model.bert.load_state_dict(torch.load(args.init_checkpoint, map_location='cpu'))
     if args.fp16:
         model.half()
     model.to(device)
+
 
     if args.fp16:
         param_optimizer = [(n, param.clone().detach().to('cpu').float().requires_grad_()) \
@@ -1621,7 +1445,7 @@ def main():
         eval_dataloader = DataLoader(eval_data, sampler=eval_sampler, batch_size=args.eval_batch_size)
 
     if args.do_train:
-        best_metric = 0
+        best_f1 = 0
         if args.encoder_type == 'LSTM':
             if args.task_name=='lstm':
                 train_features = convert_examples_to_feats_lstm(train_examples, args.max_seq_length, vocab,
@@ -1661,7 +1485,7 @@ def main():
                 #all_input_ids, all_input_mask, all_segment_ids, all_label_ids, all_pos_ids
                 if args.encoder_type == 'LSTM':
                     input_ids, input_mask, segment_ids, label_ids, pos_ids = batch
-                    loss, _ = model(input_ids, segment_ids, input_mask, pos_ids = pos_ids, labels = label_ids)
+                    loss, _ = model(input_ids, segment_ids, input_mask, pos_ids = pos_ids, labels = label_ids, train=True)
                 elif args.encoder_type == 'Bert':
                     input_ids, input_mask, segment_ids, label_ids = batch
                     loss, _ = model(input_ids, segment_ids, input_mask, labels=label_ids)
@@ -1700,11 +1524,11 @@ def main():
             model.eval()
             eval_loss, eval_accuracy = 0, 0
             nb_eval_steps, nb_eval_examples = 0, 0
-
+                      
             f_p = 0
             f_total_predict = 0
             f_total_entity = 0
-
+                      
             if args.encoder_type == 'LSTM':
                 for input_ids, input_mask, segment_ids, label_ids, pos_ids in eval_dataloader:
                     input_ids = input_ids.to(device)
@@ -1712,28 +1536,245 @@ def main():
                     segment_ids = segment_ids.to(device)
                     label_ids = label_ids.to(device)
                     pos_ids = pos_ids.to(device)
+                    if args.bilstm_crf:
+                        with torch.no_grad():
+                            _, preds = model(input_ids, segment_ids, input_mask, pos_ids = pos_ids, labels = label_ids,train=False)
 
-                    with torch.no_grad():
-                        tmp_eval_loss, logits = model(input_ids, segment_ids, input_mask, pos_ids = pos_ids, labels = label_ids)
+                        input_mask = input_mask.to('cpu')
+                        p, total_predict, total_entity = evaluate_num(preds, label_ids, input_mask, id2label)
+                        #print("p = {}, total_p ={}, total_e ={}".format(p, total_predict, total_entity))
+                    else: #bilstm_only
+                        with torch.no_grad():
+                            tmp_eval_loss, logits = model(input_ids, segment_ids, input_mask, pos_ids=pos_ids,
+                                                          labels=label_ids)
 
-
-                    _, preds = torch.max(logits.transpose(1,2).detach().cpu(), dim=1)
-                    label_ids = label_ids.squeeze().to('cpu')
-                    input_mask = input_mask.to('cpu')
-                    p, total_predict, total_entity = evaluate_num(preds, label_ids, input_mask, id2label)
-                    #print("p = {}, total_p ={}, total_e ={}".format(p, total_predict, total_entity))
+                        _, preds = torch.max(logits.transpose(1, 2).detach().cpu(), dim=1)
+                        label_ids = label_ids.squeeze().to('cpu')
+                        input_mask = input_mask.to('cpu')
+                        p, total_predict, total_entity = evaluate_num(preds, label_ids, input_mask, id2label)
 
                     f_p += p
                     f_total_predict += total_predict
                     f_total_entity += total_entity
-
+                    
                 dev_p = f_p * 1.0 / f_total_predict if f_total_predict != 0 else 0
                 dev_r = f_p * 1.0 / f_total_entity if f_total_entity != 0 else 0
                 dev_f1 = 2.0 * dev_p * dev_r / (dev_p + dev_r) if dev_p != 0 or dev_r != 0 else 0
-
+                   
             print("dev_f1 = {:.4f}, dev_p ={:.4f}, dev_r ={:.4f}".format(dev_f1, dev_p, dev_r))
+            if args.f1eval:
+                if dev_f1 >= best_f1:
+                    torch.save(model.state_dict(), os.path.join(args.output_dir, "model_best.pt"))
+                    best_f1 = dev_f1
+                    result = {'f1': dev_f1}
+                    result['precision']=dev_p
+                    result['dev_r']=dev_r
+                    logger.info("***** Eval results *****")
+                    logger.info(" f1 = %s", str(result['f1']))
+                    with open(os.path.join(args.output_dir, 'dev_result.json'), 'w', encoding='utf8') as of:
+                        json.dump(result, of, indent=2, ensure_ascii=False)
 
+        model.load_state_dict(torch.load(os.path.join(args.output_dir, "model_best.pt")))
+        torch.save(model.state_dict(), os.path.join(args.output_dir, "model.pt"))
+
+    model.load_state_dict(torch.load(os.path.join(args.output_dir, "model.pt")))
+
+    if args.do_eval:
+        pass
+
+           
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--data_dir",
+                        default='.',
+                        type=str,
+                        # required=True,
+                        help="The input data dir. Should contain the .tsv files (or other data files) for the task.")
+    parser.add_argument("--bert_config_file",
+                        default='../bert_base/bert_config.json',
+                        type=str,
+                        # required=True,
+                        help="The config json file corresponding to the pre-trained BERT model. \n"
+                             "This specifies the model architecture.")
+    parser.add_argument("--task_name",
+                        default='lstm',
+                        type=str,
+                        # required=True,
+                        help="The name of the task to train.")
+    parser.add_argument("--vocab_file",
+                        default='../bert_base/vocab.txt',
+                        type=str,
+                        # required=True,
+                        help="The vocabulary file that the BERT model was trained on.")
+    parser.add_argument("--output_dir",
+                        default='lstm_f1',
+                        type=str,
+                        # required=True,
+                        help="The output directory where the model checkpoints will be written.")
+    parser.add_argument("--init_checkpoint",
+                        default='../bert_base/pytorch_model.bin',
+                        type=str,
+                        help="Initial checkpoint (usually from a pre-trained BERT model).")
+    parser.add_argument("--do_lower_case",
+                        default=False,
+                        action='store_true',
+                        help="Whether to lower case the input text. True for uncased models, False for cased models.")
+    parser.add_argument("--max_seq_length",
+                        default=512,
+                        type=int,
+                        help="The maximum total input sequence length after WordPiece tokenization. \n"
+                             "Sequences longer than this will be truncated, and sequences shorter \n"
+                             "than this will be padded.")
+    parser.add_argument("--do_train",
+                        default=True,
+                        action='store_true',
+                        help="Whether to run training.")
+    parser.add_argument("--do_eval",
+                        default=True,
+                        action='store_true',
+                        help="Whether to run eval on the dev set.")
+    parser.add_argument("--train_batch_size",
+                        default=20,
+                        type=int,
+                        help="Total batch size for training.")
+    parser.add_argument("--eval_batch_size",
+                        default=4,
+                        type=int,
+                        help="Total batch size for eval.")
+    parser.add_argument("--learning_rate",
+                        default=0.025,
+                        type=float,
+                        help="The initial learning rate for Adam.")
+    parser.add_argument("--num_train_epochs",
+                        default=40.0,
+                        type=float,
+                        help="Total number of training epochs to perform.")
+    parser.add_argument("--warmup_proportion",
+                        default=0.1,
+                        type=float,
+                        help="Proportion of training to perform linear learning rate warmup for. "
+                             "E.g., 0.1 = 10%% of training.")
+    parser.add_argument("--save_checkpoints_steps",
+                        default=1000,
+                        type=int,
+                        help="How often to save the model checkpoint.")
+    parser.add_argument("--no_cuda",
+                        default=False,
+                        action='store_true',
+                        help="Whether not to use CUDA when available")
+    parser.add_argument("--local_rank",
+                        type=int,
+                        default=-1,
+                        help="local_rank for distributed training on gpus")
+    parser.add_argument('--seed',
+                        type=int,
+                        default=666,
+                        help="random seed for initialization")
+
+    parser.add_argument('--pooling_ratio', type=float, default=0.3,
+                        help='pooling ratio')
+    parser.add_argument('--pool_dropout_ratio', type=float, default=0.5,
+                        help='dropout ratio')
+    parser.add_argument('--rnn_hidden_size',
+                        type=int,
+                        default=160,
+                        help="Hidden_size for rnn")
+    parser.add_argument('--graph_hidden_size',
+                        type=int,
+                        default=300,
+                        help="Hidden_size for graph")
+    parser.add_argument('--input_dropout',
+                        type=float, default=0.5,
+                        help='Dropout rate for word representation.')
+    parser.add_argument('--num_graph_layers',
+                        type=int,
+                        default=2,
+                        help="Number of blocks for graph")
+    parser.add_argument('--heads', type=int, default=3, help='Num of heads in multi-head attention.')
+    parser.add_argument('--sublayer_first', type=int, default=2, help='Num of the first sublayers in dcgcn block.')
+    parser.add_argument('--sublayer_second', type=int, default=4, help='Num of the second sublayers in dcgcn block.')
+    parser.add_argument('--gcn_dropout', type=float, default=0.5, help='AGGCN layer dropout rate.')
+    parser.add_argument('--lamada', type=float, default=0.000001, help='Weights for DTW Loss.')
+    parser.add_argument('--max_offset', type=int, default=4, help='Length of max_offset.')
+
+    parser.add_argument('--gradient_accumulation_steps',
+                        type=int,
+                        default=1,
+                        help="Number of updates steps to accumualte before performing a backward/update pass.")
+    parser.add_argument('--optimize_on_cpu',
+                        default=False,
+                        action='store_true',
+                        help="Whether to perform optimization and keep the optimizer averages on CPU")
+    parser.add_argument('--fp16',
+                        default=False,
+                        action='store_true',
+                        help="Whether to use 16-bit float precision instead of 32-bit")
+    parser.add_argument('--loss_scale',
+                        type=float, default=128,
+                        help='Loss scaling, positive power of 2 values can improve fp16 convergence.')
+    parser.add_argument("--resume",
+                        default=False,
+                        action='store_true',
+                        help="Whether to resume the training.")
+    parser.add_argument("--f1eval",
+                        default=True,
+                        action='store_true',
+                        help="Whether to use f1 for dev evaluation during training.")
+    # lsc
+    parser.add_argument('--glove_f', type=str, default='data/glove.6B.300d.txt')
+    parser.add_argument('--embed_dim', type=int, default=300, help='Word embedding dimension.')
+    parser.add_argument('--encoder_type', type=str, default='LSTM', help='Bert or LSTM')
+    parser.add_argument('--embed_f', type=str, default='data/embeddings.npy')
+    parser.add_argument('--min_freq', type=int, default=1, help='Minimal word frequency for builiding vocab')
+    parser.add_argument('--tune_topk', type=int, default=1e10, help='Only finetune top N word embeddings.')
+
+    # LSTM
+    parser.add_argument('--lstm_layers', type=int, default=1, help='Number of lstm layers')
+    parser.add_argument('--lstm_dropout', type=int, default=0.2, help='dropout rate of lstm')
+    parser.add_argument("--lstm_only", default=False, action='store_true', help="Whether to only use BiLSTM")
+    parser.add_argument('--weight_decay', type=float, default=0.2, help='dropout rate of lstm')
+    parser.add_argument('--bilstm_crf', type=bool, default=False,help='whether to use BiLSTM+CRF')
+
+    # ngs
+    parser.add_argument('--token_pkl', type=str, default='data/token_pkl', help='pickle file for all tokens')
+    parser.add_argument('--vocab_pkl', type=str, default='data/vocab_pkl', help='pickle file for vocab')
+    parser.add_argument('--vocab_ct_pkl', type=str, default='data/vocab_ct_pkl', help='pickle file for vocab counter')
+    parser.add_argument('--train_feat_pkl', type=str, default='data/train_feat_pkl', help='pickle file for train')
+    parser.add_argument('--eval_feat_pkl', type=str, default='data/eval_feat_pkl', help='pickle file for eval')
+    parser.add_argument('--test_feat_pkl', type=str, default='data/test_feat_pkl', help='pickle file for test')
+    parser.add_argument('--train_feat_c_pkl', type=str, default='data/train_feat_c_pkl', help='pickle file for train')
+    parser.add_argument('--eval_feat_c_pkl', type=str, default='data/eval_feat_c_pkl', help='pickle file for eval')
+    parser.add_argument('--test_feat_c_pkl', type=str, default='data/test_feat_c_pkl', help='pickle file for test')
+
+    parser.add_argument('--num_layer', type=int, default=1, help='layer number for latent structure')
+    parser.add_argument('--first_layer', type=int, default=2, help='first layer')
+    parser.add_argument('--second_layer', type=int, default=3, help='second layer')
+    parser.add_argument('--latent_dropout', type=float, default=0.2, help="dropout for latent structure")
+    parser.add_argument('--diff_mlp_hidden', type=int, default=128, help="MLP inter-mediate hidden size")
+    parser.add_argument('--diff_position', type=int, default=500, help="max position number")
+    parser.add_argument('--latent_heads', type=int, default=4, help="heads for multihead attention")
+
+    parser.add_argument('--dropout_rate', type=float, default=0.3, help="dropout rate for classifier")
+    parser.add_argument('--rm_stopwords', type=bool, default=False, help='Remove stopwords in global word Node')
+
+    parser.add_argument('--latent_type', type=str, default='None',
+                        help="['None','hardkuma', 'diffmask', 'aggcn', 'hardkuma_binary','gdp', 'lsr']")
+    parser.add_argument('--extract_node_id', type=bool, default=True, help='extract node id')
+
+    parser.add_argument('--l0_reg', type=bool, default=True, help='l0 regualrization')
+    parser.add_argument('--speaker_reg', type=bool, default=True, help='speaker-related regualrization')
+    parser.add_argument('--lasso_reg', type=bool, default=False, help='sparsity regualrization')
+    parser.add_argument('--alpha', type=float, default=0.01, help="weight for l0")
+    parser.add_argument('--beta', type=float, default=0.01, help="weight for speaker reg")
+    parser.add_argument('--gamma', type=float, default=0.01, help="weight for lasso reg")
+    parser.add_argument('--lsr_num_layer', type=int, default=2, help="number of lsr layer")
+
+    # lgq
+    parser.add_argument('--language', type=str, default='en', help="en | cn ")
+    parser.add_argument('--dataset', type=str, default='dialogre', help="dialogre | mie ")
+
+    args = parser.parse_args()
+    main(args)

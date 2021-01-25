@@ -1,6 +1,6 @@
 import json
 
-with open("pedc_type29.json",'r') as f:
+with open("pedc_type12.json",'r') as f:
     all = json.load(f)
 with open("train.json", 'w') as train_f:
     json.dump(all[0:90],train_f)
