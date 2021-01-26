@@ -34,14 +34,7 @@ logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message
                     datefmt='%m/%d/%Y %H:%M:%S',
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-
-# torch.cuda.set_device(0)
-
 base_nlp = spacy.load('en_core_web_sm')
- 
-
-
                       
 class Span:
 
@@ -1264,8 +1257,6 @@ def read_lstm_features(features):
 def main(args):
 
 
-    print(args)
-
     processors = {
         "bert": bertProcessor,
         "bertf1c": bertf1cProcessor,
@@ -1301,6 +1292,7 @@ def main(args):
     random.seed(args.seed)
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
+
     if n_gpu > 0:
         torch.cuda.manual_seed_all(args.seed)
 
@@ -1315,8 +1307,9 @@ def main(args):
                 args.max_seq_length, bert_config.max_position_embeddings))
 
     if os.path.exists(args.output_dir) and 'model.pt' in os.listdir(args.output_dir):
-        if args.do_train and not args.resume:
-            raise ValueError("Output directory ({}) already exists and is not empty.".format(args.output_dir))
+        pass
+        # if args.do_train and not args.resume:
+        #     raise ValueError("Output directory ({}) already exists and is not empty.".format(args.output_dir))
     else:
         os.makedirs(args.output_dir, exist_ok=True)
 
@@ -1327,6 +1320,22 @@ def main(args):
     logger.info(args)
     logger.info("device: {}, n_gpu: {}, 16-bits training: {}".format(
         device, n_gpu, args.fp16))
+
+    logger.info("dividing original data")
+
+    # with open("./data/pedc.json", 'r') as f:
+    #     all = json.load(f)
+    #     random.shuffle(all)
+    #
+    # total = len(all)
+    # section = total // 6
+    # with open("./data/train.json", 'w') as train_f:
+    #     json.dump(all[:section*4],train_f)
+    # with open("./data/dev.json", 'w') as val_f:
+    #     json.dump(all[section*4:section*5],val_f)
+    # with open("./data/test.json", 'w') as test_f:
+    #     json.dump(all[section*5:],test_f)
+
 
     task_name = args.task_name.lower()
 
@@ -1585,8 +1594,6 @@ def main(args):
     if args.do_eval:
         pass
 
-           
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -1737,7 +1744,7 @@ if __name__ == "__main__":
     # LSTM
     parser.add_argument('--lstm_layers', type=int, default=1, help='Number of lstm layers')
     parser.add_argument('--lstm_dropout', type=int, default=0.2, help='dropout rate of lstm')
-    parser.add_argument("--lstm_only", default=False, action='store_true', help="Whether to only use BiLSTM")
+    parser.add_argument("--lstm_only", default=True, action='store_true', help="Whether to only use BiLSTM")
     parser.add_argument('--weight_decay', type=float, default=0.2, help='dropout rate of lstm')
     parser.add_argument('--bilstm_crf', type=bool, default=False,help='whether to use BiLSTM+CRF')
 

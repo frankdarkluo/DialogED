@@ -1,0 +1,43 @@
+[
+ [
+  [
+   "Speaker 1: Ok, right there. That, that's the third sign today. Right there.",
+   "Speaker 2: On behalf of everyone, I'd just like to say behuh.",
+   "Speaker 1: No, 'cause you just said dad and everywhere I go today I keep getting signs telling me to go see my father. Like when I was walking over here and I passed a buffet...which is my father's last name.",
+   "Speaker 3: Ahh.",
+   "Speaker 1: And they were serving franks which is his first name minus the s at the end. And there was a rotisserie with spinning chicken.",
+   "Speaker 4: His indian name?",
+   "Speaker 1: No because I chickened out the last time when I tried to meet him. So I mean coincidences? I don't think so.",
+   "Speaker 2: Freakish.",
+   "Speaker 4: Wow.",
+   "Speaker 5: Freaky.",
+   "Speaker 4: Weird, weird.",
+   "Speaker 6: Ok, so uh, who wants the last hamburger?",
+   "Speaker 1: Oh, alright, that's it, now I have to go see him.",
+   "Speaker 4: Why?",
+   "Speaker 1: Hamburger. McDonald's. Old MacDonald had a farm, my dad is a pharmacist."
+  ],
+  [
+   {
+    "trigger_word": "say",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "keep getting signs",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "serving",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "chickened",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "see",
+    "sent_id": 12
+   }
+  ]
+ ]
+]
