@@ -1,5 +1,3 @@
-
-
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -800,56 +798,47 @@ class MainSequenceClassification(nn.Module):
         self.hidden = args.rnn_hidden_size
         self.dataset=args.dataset
         self.bilstm_crf=args.bilstm_crf
+        self.bert_crf = args.bert_crf
         self.rnn_hidden=args.rnn_hidden_size
+        self.sigmoid = nn.Sigmoid()
 
 #         if self.dataset=='dialogre':
 #             self.NUM=36
 #         else:
 #             self.NUM=4
         self.NUM = 4
-
-        # lsc will have some issues when running bert
         if self.latent_type == 'gdp':
             self.latent_graph = PoolGCN(config, args)
-        elif self.latent_type == 'hardkuma':
-            print("using kuma graph")
-            self.latent_graph = KumaLayer(2 * self.hidden, "kuma", self.first_layer, self.second_layer,
-                                          self.latent_dropout)
-            #in_dim = config.embed_dim * 4 + 2 * self.config.rnn_hidden_dim  # + self.hidden
-        #            in_dim = 2 *self.config.rnn_hidden_dim # + self.hidden
 
         elif self.latent_type == 'diffmask':
             self.num_layer = args.num_layer
             self.diff_position = args.diff_position
             self.diff_mlp_hidden = args.diff_mlp_hidden
-            self.linear_latent = nn.Linear(2 * self.hidden, self.hidden//2)
+            if args.encoder_type == 'LSTM':
+                self.linear_latent = nn.Linear(2 * self.hidden, self.hidden//2)
+            elif args.encoder_type == 'Bert':
+                self.linear_latent = nn.Linear(config.hidden_size, self.hidden//2)
             #self.dropout = nn.Dropout(self.latent_dropout)
             self.latent_graph = GNNDiffMaskGate(self.hidden//2, self.diff_mlp_hidden, 1, self.diff_position,
                                                 self.latent_dropout, self.num_layer, self.first_layer,
                                                 self.second_layer, self.l0_reg, self.lasso_reg, self.speaker_reg,
                                                 alpha=args.alpha, beta=args.beta, gamma=args.gamma)
-            #in_dim = config.embed_dim * 4 + 2 * self.config.rnn_hidden_dim  # + self.hidden
-        elif self.latent_type == 'lsr':
-            self.lsr_num_layer = args.lsr_num_layer
-            self.linear_latent = nn.Linear(2 * self.hidden, self.hidden//2)
-            self.latent_graph = LSR(self.hidden // 2, self.latent_dropout, self.lsr_num_layer, self.first_layer, self.second_layer)
 
+        # classifier hidden dimension
         if self.latent_type == 'diffmask':
-            #self.classifier = nn.Linear((self.hidden//2)*2+40+config.hidden_size*3+40+30*2, num_labels * self.NUM)
-            self.classifier = nn.Linear((self.hidden//2)*2+40+config.hidden_size*3+40, num_labels * 36)
-            #self.classifier2 = nn.Linear(config.hidden_size*3, num_labels * 36)
-        elif self.latent_type == 'lsr':
-            self.classifier = nn.Linear((self.hidden//2)*2+config.hidden_size*3+40, num_labels * 36)
+            self.classifier = nn.Linear(self.hidden//2+config.hidden_size, num_labels * self.NUM + 1)
 
         elif self.args.lstm_only == True: # only lstm without gdpnet
             self.classifier = nn.Linear(self.rnn_hidden*2, num_labels * self.NUM + 1)
 
         elif args.task_name == 'lstm' or self.args.task_name == 'lstmf1c':
-#             self.classifier = nn.Linear(args.graph_hidden_size*3+40, num_labels * self.NUM)
-            self.classifier = nn.Linear(300, num_labels * self.NUM)
+            self.classifier = nn.Linear(300, num_labels * self.NUM + 1)
+        
+        elif args.bert_only == True:
+            self.classifier = nn.Linear(config.hidden_size,num_labels * self.NUM + 1 )
             
         else: # bert or roberta
-            self.classifier = nn.Linear(config.hidden_size + args.graph_hidden_size, num_labels * self.NUM)
+            self.classifier = nn.Linear(config.hidden_size + args.graph_hidden_size, num_labels * self.NUM + 1)
 
         def init_weights(module):
             if isinstance(module, (nn.Linear, nn.Embedding)):
@@ -912,6 +901,9 @@ class MainSequenceClassification(nn.Module):
             rnn_input = pack_padded_sequence(emb, l, batch_first=True, enforce_sorted=False)
             rnn_output, (ht, ct) = self.lstm(rnn_input, (h0, c0))
             word_embedding, _ = pad_packed_sequence(rnn_output, batch_first=True)
+
+            pooled_output = pool(word_embedding,~mask_local[:,:real_length].unsqueeze(-1),type='max')
+
             mask = attention_mask.squeeze()
             s_labels = labels.squeeze()
             
@@ -934,17 +926,17 @@ class MainSequenceClassification(nn.Module):
                     criterion = CrossEntropyLoss()
                     loss = criterion(logits.transpose(1, 2), labels.squeeze()[:, 0:length])
                     return loss, logits
-        else:
+        else: # bert
             if self.args.task_name == 'roberta' or self.args.task_name == 'robertaf1c':
                 word_embedding, pooled_output = self.bert(input_ids.view(-1,seq_length),
-                                        token_type_ids.view(-1,seq_length),
-                                        attention_mask.view(-1,seq_length))
+                                        attention_mask.view(-1,seq_length),
+                                        token_type_ids.view(-1,seq_length))
 
                 # due to OS env or lib version variety, Roberta from transformers may output string instead of logits 
                 if type(word_embedding) == str:
                       word_embedding, pooled_output = self.bert(input_ids.view(-1,seq_length),
-                                        token_type_ids.view(-1,seq_length),
-                                        attention_mask.view(-1,seq_length)).values() 
+                                        attention_mask.view(-1,seq_length),
+                                        token_type_ids.view(-1,seq_length)).values() 
 
                 word_embedding = word_embedding
             else: # bert
@@ -952,124 +944,61 @@ class MainSequenceClassification(nn.Module):
                                         token_type_ids.view(-1,seq_length),
                                         attention_mask.view(-1,seq_length))
                 word_embedding = word_embedding[-1]
+                word_embedding = word_embedding[:,:real_length,:]
+                mask = attention_mask.squeeze()
+                s_labels = labels.squeeze()
 
-        if self.latent_type == 'gdp':
-            adj = torch.ones(input_ids.size(0),real_length,real_length).cuda()
-            word_embedding = word_embedding[:,:real_length]
-            h, pool_mask,layer_list, src_mask_input = self.latent_graph(adj, word_embedding,input_ids.view(-1,seq_length))
+                if self.args.bert_only:
+                    output = self.dropout(word_embedding)
+                    
+                    logits = self.classifier(output)
+                    length = logits.size()[1]
 
-            if self.args.encoder_type == 'LSTM':
-                h_out = pool(h, ~mask_local, type="max")
-                subj_out = pool(h, subj_mask, type='max')
-                obj_out = pool(h, obj_mask, type='max')
+                    # there is some problem here!
+                    if self.bert_crf:
+                        if train:
+                            loss = self.crf.loss(logits, s_labels[:,:length], mask = mask[:,:length])
 
-                subj_out = torch.cat([subj_out, x_ner_emb], dim=-1)
-                obj_out = torch.cat([obj_out, y_ner_emb], dim=-1)
+                            return loss.sum(), logits
+                        else:
+                            preds = self.crf.decode(logits, mask=mask[:,:length], leading_symbolic = 0)
 
-                output = self.dropout(torch.cat([h_out, subj_out, obj_out], dim=1))
-            elif self.args.encoder_type == 'Bert':
-                h_out = pool(h, pool_mask, type="max")
-                output = self.dropout(torch.cat([pooled_output,h_out],dim=1))
+                            return logits, preds
+                    else: #bert only
+                        logits = self.classifier(self.dropout(pooled_output))
+                        criterion = BCEWithLogitsLoss()
+                        labels = labels.squeeze()[:,:logits.size()[1]]
+                        labels = labels.type(torch.cuda.FloatTensor)
+                        labels = self.sigmoid(labels)
+                        loss = criterion(logits, labels)
+                        return loss, logits                    
 
-            logits = self.classifier(output)
-            logits = logits.view(-1, self.NUM)
 
-        elif self.latent_type == 'diffmask':
+        if self.latent_type == 'diffmask':
             ctx = self.dropout(self.linear_latent(word_embedding))
 
-            #ctx = torch.cat([ctx,pos_emb[:,:real_length,:]],dim=2)
-            #Speaker
-
-            #generat speaker mask
+            #speaker mask always none cause there is no subject-object pair in PEDC
             speaker_mask = None
-            if self.speaker_reg:
-                #generate speaker mask
-                x = torch.tensor(0)
-                bz, max_len, _ =  ctx.shape
-                speaker_mask = torch.zeros(bz,max_len,max_len)
-                for i, (x_p_t, y_p_t) in enumerate(zip(subj_mask, obj_mask)):
 
-                    x_p = (x_p_t.squeeze(1) == x).nonzero().flatten()
-                    y_p = (y_p_t.squeeze(1) == x).nonzero().flatten()
-                    x_p = x_p.tolist()
-                    y_p = y_p.tolist()
-                    if len(x_p) == 0:
-                        x_p = [0]
-                    if len(y_p) == 0:
-                        y_p = [0]
-                    for x in x_p:
-                        for y in y_p:
-                            speaker_mask[i][x,y] = 1
-                speaker_mask = speaker_mask.cuda()
-
-            h, aux_loss = self.latent_graph(ctx, mask_local.squeeze(-1), speaker_mask)
+            h, aux_loss = self.latent_graph(ctx, mask_local.squeeze(-1)[:,:real_length], speaker_mask)
+            h = h[:,:real_length]
 
             #h_out = pool(h, ~mask_local, type="max")
-            subj_out = pool(h, subj_mask, type='max')
-            obj_out = pool(h, obj_mask, type='max')
-            subj_out = torch.cat([subj_out, x_ner_emb], dim=-1)
-            obj_out = torch.cat([obj_out, y_ner_emb], dim=-1)
+            h_out = pool(h, ~mask_local[:,:real_length].unsqueeze(-1), type='max')
 
-            output = self.dropout(torch.cat([pooled_output, subj_out, obj_out], dim=1))
-            #logits = self.classifier(output)
-            #output = self.dropout(self.classifier1(output))
+            output = self.dropout(torch.cat([pooled_output, h_out], dim=1))
             logits = self.classifier(output)
-            logits = logits.view(-1, self.NUM)
-            labels = labels.view(-1, self.NUM)
-            loss_fct = BCEWithLogitsLoss()
-            loss = loss_fct(logits, labels)
-            if loss.item() > 10:
-                print("something wrong with loss!")
-                # something wrong with the loss sometimes
-                # loss = torch.tensor([0])
-            loss = loss + aux_loss
+
+            length = logits.size()[1]
+            criterion = BCEWithLogitsLoss()
+            labels = labels.squeeze()[:, 0:length]
+            labels = labels.type(torch.cuda.FloatTensor)
+            labels = self.sigmoid(labels)
+            loss = criterion(logits, labels)
+
+            loss += aux_loss
             return loss, logits
 
-        if self.latent_type == 'lsr':
-            ctx = self.dropout(self.linear_latent(word_embedding))
-
-            #ctx = torch.cat([ctx,pos_emb[:,:real_length,:]],dim=2)
-
-            h = self.latent_graph(ctx)
-
-            subj_out = pool(h, subj_mask, type='max')
-            obj_out = pool(h, obj_mask, type='max')
-
-            output = self.dropout(torch.cat([pooled_output, subj_out, obj_out], dim=1))
-            #logits = self.classifier(output)
-            #output = self.dropout(self.classifier1(output))
-            logits = self.classifier(output)
-            logits = logits.view(-1, self.NUM)
-            labels = labels.view(-1, self.NUM)
-            loss_fct = BCEWithLogitsLoss()
-            loss = loss_fct(logits, labels)
-            if loss.item() > 10:
-                print("something wrong with loss!")
-                # something wrong with the loss sometimes
-                # loss = torch.tensor([0])
-            return loss, logits
-
-
-        if labels is not None:
-            loss_fct = BCEWithLogitsLoss()
-
-            src_mask_input = src_mask_input.reshape([src_mask_input.size(0),src_mask_input.size(2),src_mask_input.size(1)])
-
-            src_mask_input_index = src_mask_input.squeeze(2).sum(0).nonzero()
-
-            src_mask_output_index = pool_mask.squeeze(2).sum(0).nonzero()
-
-            DTW_hidden_0 = torch.index_select(layer_list[0],1,src_mask_input_index.view(-1))
-            DTW_hidden_1 = torch.index_select(layer_list[len(layer_list)-1], 1, src_mask_output_index.view(-1))
-
-            loss_dtw = self.DTW_criterion(DTW_hidden_0, DTW_hidden_1).mean()
-
-            labels = labels.view(-1, self.NUM)
-
-            loss = loss_fct(logits, labels) + self.args.lamada*loss_dtw
-            return loss, logits
-        else:
-            return logits
 
 class MultiHeadedPooling(nn.Module):
     def __init__(self, model_dim):

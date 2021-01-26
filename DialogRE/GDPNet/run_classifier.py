@@ -169,7 +169,7 @@ class InputFeatures(object):
     """A single set of features of data."""
 
     def __init__(self, input_ids, input_mask, segment_ids, label_id,
-                 pos_ids):
+                 pos_ids=None):
         self.input_ids = input_ids
         self.input_mask = input_mask
         self.segment_ids = segment_ids
@@ -291,25 +291,65 @@ class gloveLSTMf1cProcessor(DataProcessor):
     def __init__(self):
         random.seed(42)
         self.D = [[], [], []]
-        for sid in range(1, 3):
-            with open("data/" + ["dev.json", "test.json"][sid - 1], "r", encoding="utf8") as f:
+        for sid in range(3):
+            with open("data/" + ["train.json", "dev.json", "test.json"][sid], "r", encoding="utf8") as f:
                 data = json.load(f)
+            if sid == 0:
+                random.shuffle(data)
+                
             for i in range(len(data)):
-                for j in range(len(data[i][1])):
-                    rid = []
-                    for k in range(36):
-                        if k + 1 in data[i][1][j]["rid"]:
-                            rid += [1]
-                        else:
-                            rid += [0]
-                    for l in range(1, len(data[i][0]) + 1):
-                        d = [' '.join(data[i][0][:l]).lower(),
-                             data[i][1][j]["x"].lower(),
-                             data[i][1][j]["y"].lower(),
-                             rid,
-                             data[i][1][j]["x_type"],
-                             data[i][1][j]["y_type"]]
-                        self.D[sid] += [d]
+                text = ' '.join(data[i][0]).lower()
+                nlp_text = base_nlp(text)
+                      
+                utters_len = []
+                for t in data[i][0]:
+                    utters_len.append(len(base_nlp(t)))
+                
+                # end_index = []
+                # end = 0
+                # for length in utters_len:
+                #     end += length
+                #     end_index.append(end)
+                temp_text = ""
+                for t in range(len(data[i][0])):
+                    temp_text = temp_text + data[i][0][t] + " "
+                    nlp_text = base_nlp(temp_text)
+
+                            
+                    labels = ['O' for i in range(len(nlp_text))]
+                    for j in range(len(data[i][1])):
+                        sent_id = data[i][1][j]['sent_id']
+                        if sent_id <= t: # when the annotations are inside the conversations
+                            offset = data[i][1][j]['offset']
+                            if len(data[i][1][j]['type']) == 0:
+                                continue
+                            e_type = data[i][1][j]['type'][0]
+
+                            if sent_id == 0:
+                                if offset[1] - offset[0] == 0:
+                                    labels[offset[0]] = "S-" + e_type
+                                elif offset[1] - offset[0] == 1:
+                                    labels[offset[0]] = "B-" + e_type
+                                    labels[offset[1]] = "E-" + e_type
+                                else:
+                                    labels[offset[0]] = "B-" + e_type
+                                    labels[offset[1]] = "E-" + e_type
+                                    for z in range(offset[0]+1, offset[1]):
+                                        labels[z] = "I-" + e_type
+                            else:
+                                if offset[1] - offset[0] == 0:
+                                    labels[sum(utters_len[:sent_id])+offset[0]] = "S-" + e_type
+                                elif offset[1] - offset[0] == 1:
+                                    labels[sum(utters_len[:sent_id])+offset[0]] = "B-" + e_type
+                                    labels[sum(utters_len[:sent_id])+offset[1]] = "E-" + e_type
+                                else:
+                                    labels[sum(utters_len[:sent_id])+offset[0]] = "B-" + e_type
+                                    labels[sum(utters_len[:sent_id])+offset[1]] = "E-" + e_type
+                                    for m in range(sum(utters_len[:sent_id])+offset[0]+1, sum(utters_len[:sent_id])+offset[1]):
+                                        labels[m] = "I-" + e_type
+                    
+                    d = [temp_text, labels]
+                    self.D[sid] += [d]
         logger.info(str(len(self.D[0])) + "," + str(len(self.D[1])) + "," + str(len(self.D[2])))
 
     def get_train_examples(self, data_dir):
@@ -337,8 +377,7 @@ class gloveLSTMf1cProcessor(DataProcessor):
         for (i, d) in enumerate(data):
             guid = "%s-%s" % (set_type, i)
             examples.append(
-                InputExample(guid=guid, text_a=data[i][0], text_b=data[i][1], label=data[i][3], text_c=data[i][2],
-                             x_type=data[i][4], y_type=data[i][5]))
+                InputExample(guid=guid, text_a=data[i][0], label=data[i][1]))
 
         return examples
 
@@ -458,23 +497,150 @@ class bertProcessor(DataProcessor):  # bert
     def __init__(self):
         random.seed(42)
         self.D = [[], [], []]
+        tokenizer = tokenization.FullTokenizer(vocab_file=args.vocab_file, do_lower_case=args.do_lower_case)
         for sid in range(3):
             with open("data/" + ["train.json", "dev.json", "test.json"][sid], "r", encoding="utf8") as f:
                 data = json.load(f)
             if sid == 0:
                 random.shuffle(data)
+            
+            #tokens_a = tokenize(example.text_a, tokenizer)
             for i in range(len(data)):
+                text = ' '.join(data[i][0]).lower()
+                nlp_text = tokenize(text, tokenizer)
+                      
+                utters_len = []
+                for t in data[i][0]:
+                    utters_len.append(len(tokenize(t,tokenizer)))
+                            
+                labels = ['O' for i in range(len(nlp_text))]
                 for j in range(len(data[i][1])):
-                    rid = []
-                    for k in range(36):
-                        if k + 1 in data[i][1][j]["rid"]:
-                            rid += [1]
+                    sent_id = data[i][1][j]['sent_id']
+                    offset = data[i][1][j]['offset']
+                    if len(data[i][1][j]['type']) == 0:
+                        continue
+                    e_type = data[i][1][j]['type'][0]
+
+                    if sent_id == 0:
+                        if offset[1] - offset[0] == 0:
+                            labels[offset[0]] = "S-" + e_type
+                        elif offset[1] - offset[0] == 1:
+                            labels[offset[0]] = "B-" + e_type
+                            labels[offset[1]] = "E-" + e_type
                         else:
-                            rid += [0]
-                    d = ['\n'.join(data[i][0]).lower(),
-                         data[i][1][j]["x"].lower(),
-                         data[i][1][j]["y"].lower(),
-                         rid]
+                            labels[offset[0]] = "B-" + e_type
+                            labels[offset[1]] = "E-" + e_type
+                            for z in range(offset[0]+1, offset[1]):
+                                labels[z] = "I-" + e_type
+                    else:
+                        if offset[1] - offset[0] == 0:
+                            labels[sum(utters_len[:sent_id])+offset[0]] = "S-" + e_type
+                        elif offset[1] - offset[0] == 1:
+                            labels[sum(utters_len[:sent_id])+offset[0]] = "B-" + e_type
+                            labels[sum(utters_len[:sent_id])+offset[1]] = "E-" + e_type
+                        else:
+                            labels[sum(utters_len[:sent_id])+offset[0]] = "B-" + e_type
+                            labels[sum(utters_len[:sent_id])+offset[1]] = "E-" + e_type
+                            for m in range(sum(utters_len[:sent_id])+offset[0]+1, sum(utters_len[:sent_id])+offset[1]):
+                                labels[m] = "I-" + e_type
+                
+                d = [text, labels]
+                self.D[sid] += [d]
+        logger.info(str(len(self.D[0])) + "," + str(len(self.D[1])) + "," + str(len(self.D[2])))
+
+    def get_train_examples(self, data_dir):
+        """See base class."""
+        return self._create_examples(
+            self.D[0], "train")
+
+    def get_test_examples(self, data_dir):
+        """See base class."""
+        return self._create_examples(
+            self.D[2], "test")
+
+    def get_dev_examples(self, data_dir):
+        """See base class."""
+        return self._create_examples(
+            self.D[1], "dev")
+
+    def get_labels(self):
+        """See base class."""
+        return [str(x) for x in range(2)]
+
+    def _create_examples(self, data, set_type):
+        """Creates examples for the training and dev sets."""
+        examples = []
+        for (i, d) in enumerate(data):
+            guid = "%s-%s" % (set_type, i)
+            examples.append(
+                InputExample(guid=guid, text_a=data[i][0], label=data[i][1]))
+
+        return examples
+
+
+class bertf1cProcessor(DataProcessor):  # bert (conversational f1)
+    def __init__(self):
+        random.seed(42)
+        self.D = [[], [], []]
+        tokenizer = tokenization.FullTokenizer(vocab_file=args.vocab_file, do_lower_case=args.do_lower_case)
+        for sid in range(3):
+            with open("data/" + ["train.json", "dev.json", "test.json"][sid], "r", encoding="utf8") as f:
+                data = json.load(f)
+            if sid == 0:
+                random.shuffle(data)
+                
+            for i in range(len(data)):
+                text = ' '.join(data[i][0]).lower()
+                nlp_text = tokenize(text, tokenizer)
+                      
+                utters_len = []
+                for t in data[i][0]:
+                    utters_len.append((tokenize(t,tokenizer)))
+                
+                # end_index = []
+                # end = 0
+                # for length in utters_len:
+                #     end += length
+                #     end_index.append(end)
+                temp_text = ""
+                for t in range(len(data[i][0])):
+                    temp_text = temp_text + data[i][0][t] + " "
+                    nlp_text = tokenize(temp_text,tokenizer)
+
+                            
+                    labels = ['O' for i in range(len(nlp_text))]
+                    for j in range(len(data[i][1])):
+                        sent_id = data[i][1][j]['sent_id']
+                        if sent_id <= t: # when the annotations are inside the conversations
+                            offset = data[i][1][j]['offset']
+                            if len(data[i][1][j]['type']) == 0:
+                                continue
+                            e_type = data[i][1][j]['type'][0]
+
+                            if sent_id == 0:
+                                if offset[1] - offset[0] == 0:
+                                    labels[offset[0]] = "S-" + e_type
+                                elif offset[1] - offset[0] == 1:
+                                    labels[offset[0]] = "B-" + e_type
+                                    labels[offset[1]] = "E-" + e_type
+                                else:
+                                    labels[offset[0]] = "B-" + e_type
+                                    labels[offset[1]] = "E-" + e_type
+                                    for z in range(offset[0]+1, offset[1]):
+                                        labels[z] = "I-" + e_type
+                            else:
+                                if offset[1] - offset[0] == 0:
+                                    labels[sum(utters_len[:sent_id])+offset[0]] = "S-" + e_type
+                                elif offset[1] - offset[0] == 1:
+                                    labels[sum(utters_len[:sent_id])+offset[0]] = "B-" + e_type
+                                    labels[sum(utters_len[:sent_id])+offset[1]] = "E-" + e_type
+                                else:
+                                    labels[sum(utters_len[:sent_id])+offset[0]] = "B-" + e_type
+                                    labels[sum(utters_len[:sent_id])+offset[1]] = "E-" + e_type
+                                    for m in range(sum(utters_len[:sent_id])+offset[0]+1, sum(utters_len[:sent_id])+offset[1]):
+                                        labels[m] = "I-" + e_type
+                    
+                    d = [temp_text, labels]
                     self.D[sid] += [d]
         logger.info(str(len(self.D[0])) + "," + str(len(self.D[1])) + "," + str(len(self.D[2])))
 
@@ -502,65 +668,8 @@ class bertProcessor(DataProcessor):  # bert
         examples = []
         for (i, d) in enumerate(data):
             guid = "%s-%s" % (set_type, i)
-            text_a = tokenization.convert_to_unicode(data[i][0])
-            text_b = tokenization.convert_to_unicode(data[i][1])
-            text_c = tokenization.convert_to_unicode(data[i][2])
-            examples.append(InputExample(guid=guid, text_a=text_a, text_b=text_b, label=data[i][3], text_c=text_c))
-
-        return examples
-
-
-class bertf1cProcessor(DataProcessor):  # bert (conversational f1)
-    def __init__(self):
-        random.seed(42)
-        self.D = [[], [], []]
-        for sid in range(1, 3):
-            with open("data/" + ["dev.json", "test.json"][sid - 1], "r", encoding="utf8") as f:
-                data = json.load(f)
-            for i in range(len(data)):
-                for j in range(len(data[i][1])):
-                    rid = []
-                    for k in range(36):
-                        if k + 1 in data[i][1][j]["rid"]:
-                            rid += [1]
-                        else:
-                            rid += [0]
-                    for l in range(1, len(data[i][0]) + 1):
-                        d = ['\n'.join(data[i][0][:l]).lower(),
-                             data[i][1][j]["x"].lower(),
-                             data[i][1][j]["y"].lower(),
-                             rid]
-                        self.D[sid] += [d]
-        logger.info(str(len(self.D[0])) + "," + str(len(self.D[1])) + "," + str(len(self.D[2])))
-
-    def get_train_examples(self, data_dir):
-        """See base class."""
-        return self._create_examples(
-            self.D[0], "train")
-
-    def get_test_examples(self, data_dir):
-        """See base class."""
-        return self._create_examples(
-            self.D[2], "test")
-
-    def get_dev_examples(self, data_dir):
-        """See base class."""
-        return self._create_examples(
-            self.D[1], "dev")
-
-    def get_labels(self):
-        """See base class."""
-        return [str(x) for x in range(2)]
-
-    def _create_examples(self, data, set_type):
-        """Creates examples for the training and dev sets."""
-        examples = []
-        for (i, d) in enumerate(data):
-            guid = "%s-%s" % (set_type, i)
-            text_a = tokenization.convert_to_unicode(data[i][0])
-            text_b = tokenization.convert_to_unicode(data[i][1])
-            text_c = tokenization.convert_to_unicode(data[i][2])
-            examples.append(InputExample(guid=guid, text_a=text_a, text_b=text_b, label=data[i][3], text_c=text_c))
+            examples.append(
+                InputExample(guid=guid, text_a=data[i][0], label=data[i][1]))
 
         return examples
 
@@ -916,13 +1025,12 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
             input_ids = tokenizer.build_inputs_with_special_tokens(input_ids)
             segment_ids = [0] * (len(tokens_a) + 1) + [1] * (len(tokens_b) + len(tokens_c) + 1)
 
-        else:
+        else: # bert
             tokens_a = tokenize(example.text_a, tokenizer)
-            tokens_b = tokenize(example.text_b, tokenizer)
-            tokens_c = tokenize(example.text_c, tokenizer)
+            tokens_b = []
+            tokens_c = []
+            _truncate_seq_tuple(tokens_a, tokens_b, tokens_c, max_seq_length - 2)
 
-            _truncate_seq_tuple(tokens_a, tokens_b, tokens_c, max_seq_length - 4)
-            tokens_b = tokens_b + ["[SEP]"] + tokens_c
 
             tokens = []
             segment_ids = []
@@ -934,13 +1042,12 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
             tokens.append("[SEP]")
             segment_ids.append(0)
 
-            for token in tokens_b:
-                tokens.append(token)
-                segment_ids.append(1)
-            tokens.append("[SEP]")
-            segment_ids.append(1)
 
             input_ids = tokenizer.convert_tokens_to_ids(tokens)
+            label_ids = map_label_to_ids(example.label)
+            label_ids = label_ids[:len(tokens_a)]
+            # [CLS] and [SEP] tokens in label
+            label_ids = [0] + label_ids + [0]
 
         # The mask has 1 for real tokens and 0 for padding tokens. Only real
         # tokens are attended to.
@@ -951,12 +1058,13 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
             input_ids.append(0)
             input_mask.append(0)
             segment_ids.append(0)
+            label_ids.append(0)
 
         assert len(input_ids) == max_seq_length
         assert len(input_mask) == max_seq_length
         assert len(segment_ids) == max_seq_length
+        assert len(label_ids) == max_seq_length
 
-        label_id = example.label
 
         if ex_index < 2:
             logger.info("*** Example ***")
@@ -977,7 +1085,7 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
                 input_ids=input_ids,
                 input_mask=input_mask,
                 segment_ids=segment_ids,
-                label_id=label_id))
+                label_id=label_ids))
         if len(features[-1]) == n_class:
             features.append([])
 
@@ -1647,7 +1755,7 @@ if __name__ == "__main__":
                         action='store_true',
                         help="Whether to run eval on the dev set.")
     parser.add_argument("--train_batch_size",
-                        default=20,
+                        default=2,
                         type=int,
                         help="Total batch size for training.")
     parser.add_argument("--eval_batch_size",
@@ -1690,7 +1798,7 @@ if __name__ == "__main__":
                         help='dropout ratio')
     parser.add_argument('--rnn_hidden_size',
                         type=int,
-                        default=160,
+                        default=384,
                         help="Hidden_size for rnn")
     parser.add_argument('--graph_hidden_size',
                         type=int,
@@ -1744,9 +1852,13 @@ if __name__ == "__main__":
     # LSTM
     parser.add_argument('--lstm_layers', type=int, default=1, help='Number of lstm layers')
     parser.add_argument('--lstm_dropout', type=int, default=0.2, help='dropout rate of lstm')
-    parser.add_argument("--lstm_only", default=True, action='store_true', help="Whether to only use BiLSTM")
+    parser.add_argument("--lstm_only", default=False, action='store_true', help="Whether to only use BiLSTM")
     parser.add_argument('--weight_decay', type=float, default=0.2, help='dropout rate of lstm')
-    parser.add_argument('--bilstm_crf', type=bool, default=False,help='whether to use BiLSTM+CRF')
+    parser.add_argument('--bilstm_crf',default=False,action='store_true',help='whether to use BiLSTM+CRF')
+
+    # BERT
+    parser.add_argument("--bert_only", default=False, action='store_true', help="Whether to only use BERT")
+    parser.add_argument("--bert_crf", default=False, action='store_true', help="Whether to only use BERT+CRF")
 
     # ngs
     parser.add_argument('--token_pkl', type=str, default='data/token_pkl', help='pickle file for all tokens')
@@ -1774,8 +1886,8 @@ if __name__ == "__main__":
                         help="['None','hardkuma', 'diffmask', 'aggcn', 'hardkuma_binary','gdp', 'lsr']")
     parser.add_argument('--extract_node_id', type=bool, default=True, help='extract node id')
 
-    parser.add_argument('--l0_reg', type=bool, default=True, help='l0 regualrization')
-    parser.add_argument('--speaker_reg', type=bool, default=True, help='speaker-related regualrization')
+    parser.add_argument('--l0_reg', type=bool, default=False, help='l0 regualrization')
+    parser.add_argument('--speaker_reg', type=bool, default=False, help='speaker-related regualrization')
     parser.add_argument('--lasso_reg', type=bool, default=False, help='sparsity regualrization')
     parser.add_argument('--alpha', type=float, default=0.01, help="weight for l0")
     parser.add_argument('--beta', type=float, default=0.01, help="weight for speaker reg")
