@@ -1,10 +1,18 @@
 import json
+import random
+random.seed(0)
 
-with open("pedc_type29.json",'r') as f:
-    all = json.load(f)
-with open("train.json", 'w') as train_f:
-    json.dump(all[0:90],train_f)
-with open("dev.json", 'w') as val_f:
-    json.dump(all[90:105],val_f)
-with open("test.json", 'w') as test_f:
-    json.dump(all[105:-1],test_f)
+def divide():
+    with open("./data/pedc.json",'r') as f:
+        all = json.load(f)
+        random.shuffle(all)
+
+    total=len(all)
+    section=total//6
+
+    with open("./data/train.json", 'w') as train_f:
+        json.dump(all[:section*4],train_f)
+    with open("./data/dev.json", 'w') as val_f:
+        json.dump(all[section*4:section*5],val_f)
+    with open("./data/test.json", 'w') as test_f:
+        json.dump(all[section*5:],test_f)

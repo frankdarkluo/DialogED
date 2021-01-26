@@ -4,7 +4,7 @@ with open("data/dev.json",'r',encoding='utf8') as json_file:
     
     data = json.load(json_file)
     start = len(data) // 2 + 30 #starting position
-    for i in range(0, min(130,len(data) - start)):  # 130: we want to annotate 130 conversatiosn in total
+    for i in range(0, 1):  # 130: we want to annotate 130 conversatiosn in total
         annotated_data = []
         if i != 0:  #if first time， use blank data. (it will wipe out the previous data inside data_generated.json)
             with open("data_generated.json") as outfile:

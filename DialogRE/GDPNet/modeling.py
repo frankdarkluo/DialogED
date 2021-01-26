@@ -26,6 +26,7 @@ import constant
 from kuma_inducer import KumaLayer
 from gnndiffmask import GNNDiffMaskGate
 from lsr import LSR
+from crf import ChainCRF
 
 def gelu(x):
     """Implementation of the gelu activation function.
@@ -777,6 +778,7 @@ class MainSequenceClassification(nn.Module):
     def __init__(self, config, num_labels, vocab, args):
         super(MainSequenceClassification, self).__init__()
         self.args = args
+           
         if args.task_name == 'roberta' or args.task_name == 'robertaf1c':
             self.bert = RobertaModel.from_pretrained("roberta-base")
             # self.bert.resize_token_embeddings(len(tokenizer))
@@ -787,7 +789,6 @@ class MainSequenceClassification(nn.Module):
         else:
             self.bert = BertModel(config)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
-
         self.latent_type = self.args.latent_type
         self.first_layer = args.first_layer
         self.second_layer = args.second_layer
@@ -798,6 +799,8 @@ class MainSequenceClassification(nn.Module):
         self.l0_reg = args.l0_reg
         self.hidden = args.rnn_hidden_size
         self.dataset=args.dataset
+        self.bilstm_crf=args.bilstm_crf
+        self.rnn_hidden=args.rnn_hidden_size
 
 #         if self.dataset=='dialogre':
 #             self.NUM=36
@@ -839,7 +842,7 @@ class MainSequenceClassification(nn.Module):
             self.classifier = nn.Linear((self.hidden//2)*2+config.hidden_size*3+40, num_labels * 36)
 
         elif self.args.lstm_only == True: # only lstm without gdpnet
-            self.classifier = nn.Linear(300, num_labels * self.NUM + 1)
+            self.classifier = nn.Linear(self.rnn_hidden*2, num_labels * self.NUM + 1)
 
         elif args.task_name == 'lstm' or self.args.task_name == 'lstmf1c':
 #             self.classifier = nn.Linear(args.graph_hidden_size*3+40, num_labels * self.NUM)
@@ -873,6 +876,8 @@ class MainSequenceClassification(nn.Module):
 
             self.pos_emb = nn.Embedding(len(constant.POS_TO_ID), 30)
             self.ner_emb = nn.Embedding(6, 20, padding_idx=5)
+            
+        self.crf = ChainCRF(num_labels * self.NUM + 1, num_labels * self.NUM + 1, bigram = True)
         
         
     def init_pretrained_embeddings_from_numpy(self, pretrained_word_vectors):
@@ -886,7 +891,7 @@ class MainSequenceClassification(nn.Module):
             else: print("Finetune all word embeddings")
         
 
-    def forward(self, input_ids, token_type_ids, attention_mask, subj_pos=None, obj_pos=None, pos_ids=None, x_type=None, y_type=None, labels=None, n_class=1):
+    def forward(self, input_ids, token_type_ids, attention_mask, subj_pos=None, obj_pos=None, pos_ids=None, x_type=None, y_type=None, labels=None, n_class=1, train = True):
         seq_length = input_ids.size(2)
         attention_mask_ = attention_mask.view(-1,seq_length)
         batch_size = input_ids.size(0)
@@ -903,20 +908,32 @@ class MainSequenceClassification(nn.Module):
             pos_emb = self.pos_emb(pos_ids)
             emb = torch.cat([emb,pos_emb],dim=2)
 
-            h0, c0 = rnn_zero_state(batch_size, 150, 1)
+            h0, c0 = rnn_zero_state(batch_size, self.rnn_hidden, 1)
             rnn_input = pack_padded_sequence(emb, l, batch_first=True, enforce_sorted=False)
             rnn_output, (ht, ct) = self.lstm(rnn_input, (h0, c0))
             word_embedding, _ = pad_packed_sequence(rnn_output, batch_first=True)
-
+            mask = attention_mask.squeeze()
+            s_labels = labels.squeeze()
+            
             if self.args.lstm_only:
                 output = self.dropout(word_embedding)
                 
                 logits = self.classifier(output)
                 length = logits.size()[1]
-                criterion = CrossEntropyLoss()
-                
-                loss = criterion(logits.transpose(1,2), labels.squeeze()[:,0:length])
-                return loss, logits
+                if self.bilstm_crf:
+                    if train:
+                        loss = self.crf.loss(logits, s_labels[:,:length], mask = mask[:,:length])
+
+                        return loss.sum(), logits
+                    else:
+                        preds = self.crf.decode(logits, mask=mask[:,:length], leading_symbolic = 0)
+
+                        return logits, preds
+                else: #bilstm only
+
+                    criterion = CrossEntropyLoss()
+                    loss = criterion(logits.transpose(1, 2), labels.squeeze()[:, 0:length])
+                    return loss, logits
         else:
             if self.args.task_name == 'roberta' or self.args.task_name == 'robertaf1c':
                 word_embedding, pooled_output = self.bert(input_ids.view(-1,seq_length),

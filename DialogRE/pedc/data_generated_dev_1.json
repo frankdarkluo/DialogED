@@ -1,0 +1,2683 @@
+[
+ [
+  [
+   "Speaker 1: It is not okay that I'm aroused by this now.",
+   "Speaker 1: Hello? Oh hi, Doctor Connelly. No, she's not here but, you know, I can tell her. Should I be sitting down for this? Oh. Well, so what does that mean? Ok. Ok, thank you. Thanks.",
+   "Speaker 2: Hey sweetie.",
+   "Speaker 1: Doctor Connelly just called.",
+   "Speaker 2: With good news? Of course it is not good news, you just said \"Doctor Connelly just called\". If it was good news you would have said \"Doctor Connelly just called! \" But so what is it? Is there a problem, uh? Is there a problem with me or with you?",
+   "Speaker 1: Actually it's both of us."
+  ],
+  [
+   {
+    "trigger_word": "aroused",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "tell",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "sitting down",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "called",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "news",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "said",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "problem",
+    "sent_id": 4
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Do you have the, the Ralph Lauren file?",
+   "Speaker 2: Oh, yeah, sure, it's umm...",
+   "Speaker 1: Wh-what's that?",
+   "Speaker 3: It's from Ross, it's a love bug.",
+   "Speaker 1: Wow! Somebody wants people to know you have a boyfriend.",
+   "Speaker 2: Oh no, no-no-no, that's not, not, not, what he is doing. He's just, he's just really romantic."
+  ],
+  [
+   {
+    "trigger_word": "bug",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "know",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "boyfriend",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "romantic",
+    "sent_id": 5
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Okay, a little announcement, a little announcement. I\u2019ve decided that my best man is, my best friend Gunther!",
+   "Speaker 2: What\u2019s my last name?",
+   "Speaker 1: Central Perk?",
+   "Speaker 2: Thanks for not marrying Rachel.",
+   "Speaker 3: Oh-whoa-wait, Gunther don\u2019t-don\u2019t forget your shirt.",
+   "Speaker 4: Hey-hey, what are those?",
+   "Speaker 3: Oh, little party favours, check it out!",
+   "Speaker 4: Wow! Yeah!",
+   "Speaker 3: Oh-oh!",
+   "Speaker 1: Okay, okay, a little announcement, I just want everyone to know that the position of my best man is still open! And uh, so is the position of the bride."
+  ],
+  [
+   {
+    "trigger_word": "announcement",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "decided",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "marrying",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "forget",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "check",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "announcement",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "know",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "position",
+    "sent_id": 9
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Mr. Tribbiani, I'm afraid you've got kidney stones.",
+   "Speaker 2: Umm, well, what else could it be?",
+   "Speaker 1: It's kidney stones.",
+   "Speaker 2: Or?",
+   "Speaker 1: Kidney stones!"
+  ],
+  [
+   {
+    "trigger_word": "kidney stones",
+    "sent_id": 0
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Hey.",
+   "Speaker 2: So uhh, how's the palace?",
+   "Speaker 1: You know it's funny you should mention that 'cause I was thinkin'... what's with the boxes?",
+   "Speaker 2: Oh, uhh, actually I uh, have some news.",
+   "Speaker 3: Hey Chan, is that Joey guy gonna come by and pick up his moose hat or should I just toss it out?",
+   "Speaker 2: Well, uh, why don't you ask him yourself. Joey, this is my new roommate Eddie.",
+   "Speaker 3: Nice to meet ya.",
+   "Speaker 1: Likewise. Uh, I'll take that. It's what I came for. So, this is new. Where'd you two meet?",
+   "Speaker 3: At the uh, supermarket, in the uh, ethnic food section. I helped him pick out a chorizo.",
+   "Speaker 1: Wow.",
+   "Speaker 2: Well you know, we got to talking and uh, he said he needed a place and I had a spare room.",
+   "Speaker 1: Oh, now it's a spare room?",
+   "Speaker 2: Well yeah, in that it's not being used and I... have it to spare.",
+   "Speaker 1: Well I uh, got what I came for. I'll uh, I'll see you guys.",
+   "Speaker 2: Hey Jo. When'd you start usin' mousse in your hair?",
+   "Speaker 3: Is this guy great or what?",
+   "Speaker 1: Yeah, yeah he is."
+  ],
+  [
+   {
+    "trigger_word": "mention",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "news",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "come by",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "pick up",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "toss out",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "ask",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "roommate",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "take",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "came for",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "helped",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "pick out",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "talking",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "needed",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "had",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "spare",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "used",
+    "sent_id": 12
+   },
+   {
+    "trigger_word": "got",
+    "sent_id": 13
+   },
+   {
+    "trigger_word": "start",
+    "sent_id": 14
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Hey!",
+   "Speaker 2: Hey! What do you have there?",
+   "Speaker 1: Oh, I made a little something. If I had more time to work on it, it'd be better, but..",
+   "Speaker 3: Oh my God! You did that yourself?",
+   "Speaker 2: Honey, that's gorgeous!",
+   "Speaker 4: You know, the baby can't read, Mike!",
+   "Speaker 5: Hi! You guys, the car-service just got here. I can't believe they're not home yet! I have to catch my stupid plane. I wanna see the baby!",
+   "Speaker 4: Monica just called from the cab. She said they should be here any minute. And apparently, there's some big surprise.",
+   "Speaker 2: Yeah, did she sound happy about it? 'Cause my friend Ethel's baby was born with a teeny, tiny beard.",
+   "Speaker 5: Oh my God!",
+   "Speaker 3: Oh my God!",
+   "Speaker 5: Hi! Oh my gosh!",
+   "Speaker 6: Hey.",
+   "Speaker 2, Speaker 3, Speaker 5: Hey.",
+   "Speaker 4: Hey, so what is the big surprise?",
+   "Speaker 5: Oh.",
+   "Speaker 3: Oh my God!",
+   "Speaker 5: What... What...",
+   "Speaker 3: Okay, okay, awkward question. The hospital knows you took two, right?",
+   "Speaker 7: Yes, it's twins!",
+   "Speaker 3: Oh my God.",
+   "Speaker 4: Oh, they're so cute! Now, what, what kinds are they?",
+   "Speaker 7: This is a boy, and that's a girl.",
+   "Speaker 6: Her name is Erica.",
+   "Speaker 5: Aw..",
+   "Speaker 4: Hey, that pregnant girl's name was Erica.",
+   "Speaker 6: Yeah. It's a shame you two didn't get to spend more time together.",
+   "Speaker 7: Yeah, we named the boy Jack after dad.",
+   "Speaker 3: Aw, he's gonna be so happy.",
+   "Speaker 2: Oh, Jack Bing. I love that. Ooh, it sounds like a '40s newspaper guy, you know? \"Jack Bing, Morning Gazette. I'm gonna blow this story wide open!\"",
+   "Speaker 5: Oh my gosh. Wow, so beautiful."
+  ],
+  [
+   {
+    "trigger_word": "work on",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "read",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "catch plane",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "called",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "said",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "surprise",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "sound",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "born",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "surprise",
+    "sent_id": 14
+   },
+   {
+    "trigger_word": "question",
+    "sent_id": 18
+   },
+   {
+    "trigger_word": "twins",
+    "sent_id": 19
+   },
+   {
+    "trigger_word": "cute",
+    "sent_id": 21
+   },
+   {
+    "trigger_word": "spend time",
+    "sent_id": 26
+   },
+   {
+    "trigger_word": "happy",
+    "sent_id": 28
+   },
+   {
+    "trigger_word": "love",
+    "sent_id": 29
+   },
+   {
+    "trigger_word": "like",
+    "sent_id": 29
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: He called the Long Island Expressway a concrete miracle.",
+   "Speaker 2: This room! This night! That waiter! His shoes! I must take a mental picture! Ooh sorry\u2026",
+   "Speaker 3: Were you guys making fun of Parker?",
+   "Speaker 2: That depends, how much did you hear?",
+   "Speaker 3: So, he a little enthusiastic, what\u2019s wrong with that?",
+   "Speaker 1: It\u2019s just that, it\u2019s so much.",
+   "Speaker 3: Well, so what I like him! Do I make fun of the people you\u2019ve dated? Tag, Janice, Mona? No, because friends don\u2019t do that. But, do you want my opinion? Do you want it? \u2018Cause in my opinion, your collective dating record reads like the who\u2019s who of human crap.",
+   "Speaker 1: I feel terrible.",
+   "Speaker 4: I know",
+   "Speaker 2: What was wrong with Mona?"
+  ],
+  [
+   {
+    "trigger_word": "called",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "take a picture",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "making fun of",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "depends",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "hear",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "enthusiastic",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "like",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "make fun of",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "opinion",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "reads",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "feel",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "know",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "wrong",
+    "sent_id": 9
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Wow! That\u2019s ah, that\u2019s pretty nice!",
+   "Speaker 2: Pretty nice?",
+   "Speaker 3: You\u2019ll have to pardon my roommate, he wanted to marry this.",
+   "Speaker 1: We don\u2019t have 50 bucks, but would you be willing to trade for it? We\u2019ve got a canoe."
+  ],
+  [
+   {
+    "trigger_word": "pardon",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "marry",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "trade",
+    "sent_id": 3
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: This is the final boarding call for Flight 664 to Yemen.",
+   "Speaker 2: Well, I-I guess I gotta go.",
+   "Speaker 3: Oh, my Bing-a-ling. I\u2019ll wait for you. Do you even know how long you\u2019re going to be gone?",
+   "Speaker 2: Well, just until we find an energy source to replace fuel.",
+   "Speaker 3: Oh. Well, I\u2019ll right you everyday. 15 Yemen Road, Yemen.",
+   "Speaker 2: Okay, good-bye. Good-bye."
+  ],
+  [
+   {
+    "trigger_word": "boarding call",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "go",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "wait",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "find",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "replace",
+    "sent_id": 3
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Aren't you gonna...",
+   "Speaker 2: Oh, Carol and I have a new system. If she punches in 911, it means she's having a baby, otherwise I just ignore it.",
+   "Speaker 3: What about Andr?",
+   "Speaker 2: Oh, well this morning he got a call from who I think was our cousin Nathan, and frankly, it was a little more than I needed to know."
+  ],
+  [
+   {
+    "trigger_word": "system",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "punches",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "call",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "know",
+    "sent_id": 3
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: And then my wife and I went on a cruise to the Galapagos. There was a sea food buffet you wouldn't believe. There were clams, and mussels, and oysters, and cracked crab, and snow crab, and king crab. It's a pity I'm allergic to shellfish.",
+   "Speaker 2: So, where did you get your undergraduate degree?",
+   "Speaker 1: And that's not all I'm allergic to.",
+   "Speaker 2: Oh, it's not over!",
+   "Speaker 1: I'm also allergic to peanuts, and cashews, and almonds, and filberts...",
+   "Speaker 2: So basically all nuts?",
+   "Speaker 1: Interestingly... no.",
+   "Speaker 3: Kinda playing fast and loose with the word \"interesting\".",
+   "Speaker 1: If you'll excuse me I'm going to use the restroom.",
+   "Speaker 3: Oh my God!!",
+   "Speaker 2: I've lost the will to live.",
+   "Speaker 3: Let's ditch him!",
+   "Speaker 2: What?",
+   "Speaker 3: Come on, he's still in the bathroom! I'm begging you!",
+   "Speaker 2: Oh... ok, fine. But... ehm... I just have one question for you, ehm... When we exit should we walk, or run, or prance, or stroll...",
+   "Speaker 3: Stop it, stop it! He talks slow but he might pee fast! Ok, let's go!!"
+  ],
+  [
+   {
+    "trigger_word": "cruise",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "buffet",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "allergic",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "degree",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "nuts",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "excuse",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "use",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "live",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "ditch",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "begging",
+    "sent_id": 13
+   },
+   {
+    "trigger_word": "question",
+    "sent_id": 14
+   },
+   {
+    "trigger_word": "exit",
+    "sent_id": 14
+   },
+   {
+    "trigger_word": "talks",
+    "sent_id": 15
+   },
+   {
+    "trigger_word": "pee",
+    "sent_id": 15
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Hi!",
+   "Speaker 2: Hey, Phoebe.",
+   "Speaker 1: Hey, oh, you know that guy who's been following me? I talked to him today.",
+   "Speaker 3: You talked to him. Are you crazy?",
+   "Speaker 1: Okay, first I'm not crazy. And second, say it don't spray it. Anyway his name is Malcom, and he wasn't following me, I mean he was, but 'cause he thought I was Ursula, ick. And, that's why, that's why he couldn't just come up and talk to me. 'Cause of the restraining order.",
+   "Speaker 4: Umm, not feeling better 'bout Malcom.",
+   "Speaker 1: Ooh! No, no, no, no, he's not like a kook, no. He's just like this, this very passionate, incredibly romantic guy, that got like a tinsy bit carried away, you know. And we just get along really well, and he's so cute.",
+   "Speaker 5: Oh my God, you've got a crush on your sister's stalker.",
+   "Speaker 1: No, I'm just gonna help him, you know, get 'de-Ursula-ized', like you know, like I did for Joey after he went out with her.",
+   "Speaker 3: Hey, I didn't stalk her. I mean",
+   "Speaker 1: Okay, I asked for the news, not the weather."
+  ],
+  [
+   {
+    "trigger_word": "following",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "talked",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "talked",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "spray",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "thought",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "come up",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "talk",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "feeling",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "get along well",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "crush",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "help",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "went out",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "stalk",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "asked for",
+    "sent_id": 10
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Oh, this is so exciting! You get your picture back up on the wall of fame! Eek!",
+   "Speaker 2: I know. It was so cool when I was up there before. Me and Jim Belushi would just be crackin\u2019 up about something\u2026 Then I get fired off of Days Of Our Lives and he takes me down. Now he\u2019s just laughing at me. Look at him, that smug Belushi bastard, I\u2019ll\u2026",
+   "Speaker 1: Ohh, okay maybe they put your picture back up they can put you next to Matt Lauer. Look at him, smiling at me. Yeah I know; we\u2019d be great together!",
+   "Speaker 2: Hey! So I\u2019m back.",
+   "Speaker 3: Who are you?",
+   "Speaker 2: Joey Tribbiani! From the wall! Okay, maybe this will jog your memory, huh? Huh? Okay eh-ah-anyway, I\u2019m ready to go back up on the wall I\u2019m the star of a new TV show.",
+   "Speaker 3: Show me in the table.",
+   "Speaker 2: Oh well, it\u2019s not on TV yet.",
+   "Speaker 3: Well, then it\u2019s not on the wall yet.",
+   "Speaker 2: Okay, fine, I will bring you a tape, huh?",
+   "Speaker 1: So umm, now do you have any of Matt Lauer\u2019s clothes here? Maybe? Just ones that haven\u2019t been cleaned yet?"
+  ],
+  [
+   {
+    "trigger_word": "back up",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "crackin\u2019 up",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "fired off",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "takes me down",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "laughing",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "bastard",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "picture",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "smiling",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "star",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "Show",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "bring",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "clothes",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "cleaned",
+    "sent_id": 10
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Hey guys, does anybody know a good date place in the neighborhood?",
+   "Speaker 2: How about Tony's? If you can finish a 32-ounce steak, it's free.",
+   "Speaker 1: OK, ahem, hey, does anybody know a good place if you're not dating a puma?",
+   "Speaker 3: Who are you going out with?",
+   "Speaker 4: Oh, is this the bug lady?",
+   "Speaker 5: Bzzzz.... I love you, Ross.",
+   "Speaker 1: Her name is Celia. She's not a bug lady. She's curator of insects at the museum.",
+   "Speaker 5: So what are you guys going to do?",
+   "Speaker 1: Oh, I just thought we could go out to dinner, and then maybe bring her back to my place and I'd introduce her to my monkey.",
+   "Speaker 3: And he's not speaking metaphorically.",
+   "Speaker 2: So.... back to your place...you thinking, maybe...  huh-huh?",
+   "Speaker 1: Well, I don't know.... huh-huh.... but I'm hoping huh-huh.",
+   "Speaker 2: I'm telling you, that monkey is a chick magnet! She's going to take one look at his furry, cute little face and it'll seal the deal."
+  ],
+  [
+   {
+    "trigger_word": "date place",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "finish",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "puma",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "going out",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "bug",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "curator",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "dinner",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "bring",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "introduce",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "metaphorically",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "thinking",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "hoping",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "telling",
+    "sent_id": 12
+   },
+   {
+    "trigger_word": "take one look at",
+    "sent_id": 12
+   },
+   {
+    "trigger_word": "seal the deal",
+    "sent_id": 12
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: God, what is wrong with me.",
+   "Speaker 2: You need to get some sleep.",
+   "Speaker 1: I need to get some Richard.",
+   "Speaker 3: Monica, you broke up with him for a reason.",
+   "Speaker 1: I know, I know. I'm just so tired of-of missing him. I'm tired of wondering why hasn't he called. Why hasn't he called!",
+   "Speaker 4: Maybe, because you told him not to.",
+   "Speaker 1: What are you the memory woman?",
+   "Speaker 5: Their not breaking up. Chandler and Janice. Their not breaking up. He didn't blink or anything.",
+   "Speaker 3: Well, you know I'm not surprised. I mean have you seen them together, they're really cute.",
+   "Speaker 5: Cute! This is Janice! You remember Janice?",
+   "Speaker 3: Yes, Joey, I remember, she's annoying, but you know what she's-she's his girlfriend now. I mean what can we do?",
+   "Speaker 5: There you go! That's the spirit I'm looking for! What can we do? Huh? All right who's first? Huh? Ross?",
+   "Speaker 2: Well I'm thinking that Chandler's our friend and Janice makes him happy, so I say we just all be adult about it and accept her.",
+   "Speaker 5: Yeah, we'll call that Plan B. All right?"
+  ],
+  [
+   {
+    "trigger_word": "sleep",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "broke up",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "missing",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "wondering",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "told",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "blink",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "remember",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "remember",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "spirit",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "looking for",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "makes",
+    "sent_id": 12
+   },
+   {
+    "trigger_word": "accept",
+    "sent_id": 12
+   },
+   {
+    "trigger_word": "call",
+    "sent_id": 13
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Look, you can't do this Mon. All right, if you do this, I'm, I'm gonna, I'm, I'm gonna.....",
+   "Speaker 2: You're gonna what?",
+   "Speaker 1: I'm gonna tell Mom.",
+   "Speaker 3: Honey, I'm sorry, but he's right. I love you, but you're crazy.",
+   "Speaker 1: Crazy.",
+   "Speaker 2: What?! Why? Why is this crazy? So this isn't the ideal way to something....",
+   "Speaker 1: Oh, it's not the ideal way...",
+   "Speaker 2: Lips moving, still talking. I mean it may not be ideal, but I'm so ready. No, I-I-I see the way Ben looks at you. It makes me ache, you know?",
+   "Speaker 4: Check it out!! Jam crackers!",
+   "Speaker 2: Okay, all right, how's this? 27. Italian-American guy. He's an actor, born in Queens. Wow, big family, seven sisters, and he's the only....boy. Oh my God, under personal comments: 'New York Knicks, rule!'",
+   "Speaker 4: Yeah, the Knicks rule!",
+   "Speaker 2: Joey, this is you!",
+   "Speaker 4: Let me see. Oh, right."
+  ],
+  [
+   {
+    "trigger_word": "tell",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "ideal",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "ache",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "Check",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "rule",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "see",
+    "sent_id": 12
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Oh hey Rachel, sweetheart? You have got to tell the post office that you have moved. Okay? We are still getting all your bills and stuff.",
+   "Speaker 2: Oh-oh, Pottery Barn! You can throw the rest away.",
+   "Speaker 1: I\u2019m not your garbage man. I\u2019m your mailman.",
+   "Speaker 2: Monica look! Look-look-look! Here is that table that I ordered.",
+   "Speaker 3: You got it from Pottery Barn?!",
+   "Speaker 2: Yeah! It\u2019s an apothecary table. Does anyone even know what an apothecary is?",
+   "Speaker 1: A pharmacist.",
+   "Speaker 3: Rach, Phoebe hates Pottery Barn.",
+   "Speaker 4: I hate Pottery Barn too. They kicked me out of there just because I sat on a bed!",
+   "Speaker 1: You took off your pants and climbed under the sheets!",
+   "Speaker 4: I was tired!"
+  ],
+  [
+   {
+    "trigger_word": "moved",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "tell",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "throw",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "ordered",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "apothecary",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "pharmacist",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "hates",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "kicked me out",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "took off",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "climbed",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "tired",
+    "sent_id": 10
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Well, everyone seems to be enjoying your dish.",
+   "Speaker 2: And you?",
+   "Speaker 1: I thought it was\u2026 quite tasty.",
+   "Speaker 2: So if everyone liked it, and you liked it, that would make this a success. Which would make you\u2026",
+   "Speaker 1: A bitch?",
+   "Speaker 2: Well, I was going for wrong, but we can use your word.",
+   "Speaker 1: Yes, well I was wrong, and I have to say you really impressed me today.",
+   "Speaker 2: Wow!",
+   "Speaker 3: Umm, you might even say that she pulled a Monica. She doesn\u2019t know we switched it.",
+   "Speaker 1: And the next time you cater for me, there will be nothing but ice in the freezer.",
+   "Speaker 2: That really means a lot. Oh, and Mom, don\u2019t bite your nails."
+  ],
+  [
+   {
+    "trigger_word": "enjoying",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "tasty",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "liked",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "success",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "impressed",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "pulled",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "switched",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "cater for",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "means",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "bite",
+    "sent_id": 10
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: \"Hi, this is Richard. Please, leave a message at the tone.\"",
+   "Speaker 2: \"You have two new messages.\"",
+   "Speaker 3: Wow, what a cool job. 'You have two new messages.' 'Please, pass the pie.'",
+   "Speaker 4: \"Hi, it's Monica. I'm just checking in 'cause I got this message from you and I didn't know if it was old or new or what. So, I'm just checkin'. So let me know, or don't, whatever. I'm breezy.\"",
+   "Speaker 3: Hey, you can't say you're breezy, that, that totally negates the breezy.",
+   "Speaker 5: Hola, it's me, yesterday was really fun. Call me about this weekend, okay.",
+   "Speaker 3: Now she sounded breezy.",
+   "Speaker 4: He's seeing someone. I can't believe he's seeing someone.",
+   "Speaker 6: Monica, you don't know that.",
+   "Speaker 4: Well, who's voice was that?",
+   "Speaker 7: Maybe it was his sister's. You know, maybe it was his daughter's.",
+   "Speaker 4: Michelle! Of course, it was Michelle! Did it sound like Michelle?",
+   "Speaker 8: Oh, great. It's starting to rain, that will make it easy to get a cab.",
+   "Speaker 4: It was Michelle. It was definitely Michelle."
+  ],
+  [
+   {
+    "trigger_word": "leave a message",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "messages",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "checking in",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "negates",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "sounded",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "seeing",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "sound like",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "rain",
+    "sent_id": 12
+   },
+   {
+    "trigger_word": "get a cab",
+    "sent_id": 12
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: So.",
+   "Speaker 2: So. I just thought the two of us should hang out for a bit. I mean, you know, we've never really talked. I guess you'd know that, being one of the two of us, though, right?",
+   "Speaker 1: I know, I probably shouldn't even tell you this, but I'm pretty much totally intimidated by you.",
+   "Speaker 2: Really? Me?",
+   "Speaker 1: Yes. Oh my god, are you kidding? Ross is so crazy about you, and I really wanted you to like me, and, it's probably me being totally paranoid, but I kinda got the feeling that maybe you don't.",
+   "Speaker 2: Well, you're not totally paranoid.",
+   "Speaker 1: Oy.",
+   "Speaker 2: Um, ok, uh, oh god, um, when you and uh Ross first started going out, it was really hard for me, um, for many reasons, which I'm not gonna bore you with now, but um, I just, I see how happy he is, you know, and how good you guys are together, and um, Monica's always saying how nice you are, and god I hate it when she's right.",
+   "Speaker 1: Thanks. Hey, listen, would you like to go to a movie sometime or something?",
+   "Speaker 2: Yeah, that'd be great. I'd love it.",
+   "Speaker 1: I'd love it too. Shoot, I gotta go. So, I'll talk to you later.",
+   "Speaker 2: All right, Julie. What a manipulative bitch."
+  ],
+  [
+   {
+    "trigger_word": "thought",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "hang out",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "talked",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "tell",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "intimidated",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "kidding",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "paranoid",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "going out",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "bore",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "go to a movie",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "talk",
+    "sent_id": 10
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Would you like some more coffee, baby-doll?",
+   "Speaker 2: I'm fine, thanks.",
+   "Speaker 3: Yeah, see, I can't pull of baby-doll can I?",
+   "Speaker 4: No. I think we learned that from the sugarlips incident. I'm gonna get some tea.",
+   "Speaker 3: Okay.",
+   "Speaker 3: Hiya doin' pumpkin?",
+   "Speaker 2: Nope.",
+   "Speaker 1: I'll see you after work sweetie.",
+   "Speaker 2: Okay. Bye!"
+  ],
+  [
+   {
+    "trigger_word": "like",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "pull",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "learned",
+    "sent_id": 3
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Okay, Phoebe, this Dr. Oberman. He has no strong feelings about Fonzie or any of the Happy Days gang.",
+   "Speaker 2: Hi! And you're going into what grade?",
+   "Speaker 3: Umm, I'm actually a first year resident, but I get that a lot, you see, I-I graduated early\u2026",
+   "Speaker 2: Uh-huh, me too. Ross, maybe I should've specified that I'd be needing a grown up doctor.",
+   "Speaker 3: Oh no, I'm fully qualified to\u2026",
+   "Speaker 2: Shh! Doogie, shh! Doesn't anybody understand that I'm gonna be having babies soon? Huh? Go! Go little boy, go!",
+   "Speaker 4: Oh cool! You made him cry!"
+  ],
+  [
+   {
+    "trigger_word": "feelings",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "going into",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "resident",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "graduated",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "specified",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "qualified",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "understand",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "having babies",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "made",
+    "sent_id": 6
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Hey! Joey Tribbiani! I\u2019m here! I\u2019m here!",
+   "Speaker 2: Calm down, we got time, we\u2019re running a little late.",
+   "Speaker 1: Look at that, Charlton Heston eating a liquorice whip!",
+   "Speaker 2: Yeah, we loves \u2018em. I\u2019ve never seen him with\u2014",
+   "Speaker 1: Whoa! Yeah, what the hell is that? What smells so bad?",
+   "Speaker 2: You."
+  ],
+  [
+   {
+    "trigger_word": "Calm down",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "late",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "eating",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "seen",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "smells",
+    "sent_id": 4
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Oh, great! Can you believe I found it on the second floor?",
+   "Speaker 2: Who is it?",
+   "Speaker 3: N.Y.P.D!!",
+   "Speaker 4, Speaker 1: Oh my God!",
+   "Speaker 1: Uhh, just a minute officer!!",
+   "Speaker 5: I'm looking for Phoebe Buffay!",
+   "Speaker 4: Ooh, God, it's him! It's that cop! God, I can't believe it! He found me!",
+   "Speaker 6: Oh my God, Phoebe, are you gonna go to jail?!",
+   "Speaker 4: Well, if I'm going down, I'm taking you with me. Harboring a fugitive? That's one to three years minimum. Good luck Chandler. Okay, you can arrest me. Fine. But you'll never make it stick and you know it!",
+   "Speaker 5: Yeah, but I kinda don't have a choice, it's my job. I mean, you understand right?",
+   "Speaker 4: Yep! As long as you understand that I'm going to call my lawyer and once he puts you on the stand he'll make you look like a fool. A fool!",
+   "Speaker 5: I don't like looking foolish. Y'know what? Maybe uh, I don't arrest you today. Maybe I came by and you weren't here.",
+   "Speaker 4: I would love it if I weren't here!",
+   "Speaker 5: Okay, so since umm, you're not going to jail tonight I was wondering if you would like to go to dinner with me?",
+   "Speaker 4: Me?!",
+   "Speaker 5: Yeah. Ever since you flashed my badge at me, I kinda can't stop thinking about you. You're the prettiest, fake undercover whore I've ever seen.",
+   "Speaker 7, Speaker 1: Nice!",
+   "Speaker 4: Wow! I didn't see that coming! You're-you're asking me out!",
+   "Speaker 5: Yeah. I mean, I coulda done it better, but these people keep staring at me.",
+   "Speaker 4: Umm, yeah, I'd like to go out with you officer\u2026",
+   "Speaker 5: Gary.",
+   "Speaker 4: Gary.",
+   "Speaker 8: Okay, so it's a date.",
+   "Speaker 4: Yeah! So--ooh, I gotta ask you though. How did you know where to find me?",
+   "Speaker 8: Well you're fingerprints were all over my badge so I just ran it through the computer and this was listed as your last known address so I just checked it out.",
+   "Speaker 4: Ohh, impressive.",
+   "Speaker 8: Not as impressive as you. I gotta tell you, I looked at your record and you've done some pretty weird stuff.",
+   "Speaker 4: Yeah, we'll talk at dinner.",
+   "Speaker 8: Okay. So I'll come by in a couple hours and pick you up?",
+   "Speaker 4: All right, I can't wait!",
+   "Speaker 8: Okay. And don't worry, I'm not just gonna take you out for donuts."
+  ],
+  [
+   {
+    "trigger_word": "found",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "looking for",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "cop",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "go to jail",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "choice",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "understand",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "call",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "puts",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "look like",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "arrest",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "came by",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "wondering",
+    "sent_id": 13
+   },
+   {
+    "trigger_word": "go to dinner",
+    "sent_id": 13
+   },
+   {
+    "trigger_word": "flashed",
+    "sent_id": 15
+   },
+   {
+    "trigger_word": "thinking about",
+    "sent_id": 15
+   },
+   {
+    "trigger_word": "see",
+    "sent_id": 17
+   },
+   {
+    "trigger_word": "staring",
+    "sent_id": 18
+   },
+   {
+    "trigger_word": "go out",
+    "sent_id": 19
+   },
+   {
+    "trigger_word": "date",
+    "sent_id": 22
+   },
+   {
+    "trigger_word": "find",
+    "sent_id": 23
+   },
+   {
+    "trigger_word": "fingerprints",
+    "sent_id": 24
+   },
+   {
+    "trigger_word": "ran through",
+    "sent_id": 24
+   },
+   {
+    "trigger_word": "checked",
+    "sent_id": 24
+   },
+   {
+    "trigger_word": "impressive",
+    "sent_id": 26
+   },
+   {
+    "trigger_word": "looked",
+    "sent_id": 26
+   },
+   {
+    "trigger_word": "talk",
+    "sent_id": 27
+   },
+   {
+    "trigger_word": "come by",
+    "sent_id": 28
+   },
+   {
+    "trigger_word": "pick up",
+    "sent_id": 28
+   },
+   {
+    "trigger_word": "take out",
+    "sent_id": 30
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: It\u2019s unbelievable! I-I can\u2019t believe that sign didn\u2019t work!",
+   "Speaker 2: Y\u2019know what would work?",
+   "Speaker 1: Hmm?",
+   "Speaker 2: Stop making candy!",
+   "Speaker 1: But they like it!",
+   "Speaker 2: You mean they like you.",
+   "Speaker 1: Maybe.",
+   "Speaker 2: Is that why you became a chef? So that people would like you?",
+   "Speaker 1: Oh, you really want to talk about getting people to like you huh, funny man?"
+  ],
+  [
+   {
+    "trigger_word": "work",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "work",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "Stop",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "like",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "chef",
+    "sent_id": 7
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Hi! Hi, I'm Ross, you don't know me, but I'm a big, big fan of yours. I mean, Blue Velvet, woo-oo hoo! Um, I was wondering if I could um, maybe buy you a cup of coffee? Or maybe reimburse you for that one?",
+   "Speaker 2: Aren't you with that girl over there?",
+   "Speaker 1: Well, yeah, kinda. Um, but that's okay, see we have an understanding, um, see we each have this list of five famous people, so I'm allowed to sleep with you. No, no, no, it's flattery.",
+   "Speaker 2: I'm sorry.",
+   "Speaker 1: Oh no, no, no, wait, wait, Isabella. Don't, don't just dismiss this so fast. I mean this is a once in a lifetime opportunity...",
+   "Speaker 2: Yeah, for you. Is that the list?",
+   "Speaker 1: Um, yeah.",
+   "Speaker 2: May I see it?",
+   "Speaker 1: Um, no.",
+   "Speaker 2: Come on!",
+   "Speaker 1: But, okay.",
+   "Speaker 2: I'm not on the list!",
+   "Speaker 1: Um, see, but that's not the final draft.",
+   "Speaker 2: It's laminated!",
+   "Speaker 1: Yeah, um, okay see, you were, you were on the list but my friend, Chandler brought up the very good point that you are international, so I bumped you for Wynona Rider, local.",
+   "Speaker 2: Y'know it's ironic...",
+   "Speaker 1: What?",
+   "Speaker 2: ...because I have a list of five goofy coffee house guys and yesterday I bumped you for that guy over there.",
+   "Speaker 1: We're just gonna be friends."
+  ],
+  [
+   {
+    "trigger_word": "fan",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "buy",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "reimburse",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "understanding",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "allowed",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "dismiss",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "list",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "draft",
+    "sent_id": 12
+   },
+   {
+    "trigger_word": "laminated",
+    "sent_id": 13
+   },
+   {
+    "trigger_word": "bumped",
+    "sent_id": 14
+   },
+   {
+    "trigger_word": "ironic",
+    "sent_id": 15
+   },
+   {
+    "trigger_word": "bumped",
+    "sent_id": 17
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: I\u2019ve gotta call my friend Mary and tell her how good this is, from Monica\u2019s room.",
+   "Speaker 2: I\u2019ll help you dial."
+  ],
+  [
+   {
+    "trigger_word": "dial",
+    "sent_id": 1
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: So, the essence of the character is rooted in her confidence. So, when Jessica enters a room for instance, she owns everything and every person in that room. You try.",
+   "Speaker 2: Okay! All right!",
+   "Speaker 1: No, he already knows that he owns everything in the room! He\u2019s not finding it out for the first time! So, try it again.",
+   "Speaker 2: Okay. Okay.",
+   "Speaker 1: Right. He\u2019s not angry at the room either. Try it again, he owns it! He owns the room. It is his. He owns, owns, owns, owns the room! He owns it!! All right, it\u2019s a little weird, but it\u2019s getting better. Oh well, I\u2019m gonna miss this woman so much. I don\u2019t know what I\u2019m going to do! I mean, it\u2019s been 20 years of my life.",
+   "Speaker 2: Oh well\u2014Hey-hey! Maybe, maybe uh, maybe this is a good thing. Y\u2019know? It\u2019ll-it\u2019ll give you a chance to shake things up, play different characters. You\u2019re so talented.",
+   "Speaker 1: I am. I am, but I don\u2019t know you know. An actor of a certain age is not that easy.",
+   "Speaker 2: Hey that\u2019s not true! Look at uh, look at Angela Lansb\u2014Angelina Jolie!",
+   "Speaker 1: I probably should\u2019ve just left years ago when the offers were pouring in, but y\u2019know I just got so comfy here! And\u2026 Ohh, I turned down some amazing work!",
+   "Speaker 2: Like-like what?",
+   "Speaker 1: Well, let\u2019s just say if I left 15 years ago, the landscape of Mexican cinema would be very different today!",
+   "Speaker 2: Wow!",
+   "Speaker 1: But\u2026 Well now, now\u2019s a different time for me.",
+   "Speaker 2: Oh hey come on, don\u2019t-don\u2019t-don\u2019t do this! Umm, look let-let me tell you something, okay? Now when I watch you do a scene, I\u2019m thinking, \"Boy, she-she is a great actress!\" Uh but-but, I am also thinking, \"She is hot!\""
+  ],
+  [
+   {
+    "trigger_word": "rooted",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "enters",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "owns",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "owns",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "angry",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "miss",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "shake up",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "play",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "left",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "pouring in",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "turned down",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "landscape",
+    "sent_id": 10
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Who's Paul?",
+   "Speaker 2: Paul the Wine Guy, Paul?",
+   "Speaker 3: Maybe.",
+   "Speaker 1: Wait. Your 'not a real date' tonight is with Paul the Wine Guy?",
+   "Speaker 2: He finally asked you out?",
+   "Speaker 3: Yes!",
+   "Speaker 4: Ooh, this is a Dear Diary moment.",
+   "Speaker 3: Rach, wait, I can cancel...",
+   "Speaker 5: Please, no, go, that'd be fine!",
+   "Speaker 3: Are, are you okay? I mean, do you want me to stay?",
+   "Speaker 2: That'd be good...",
+   "Speaker 3: Really?",
+   "Speaker 2: No, go on! It's Paul the Wine Guy!"
+  ],
+  [
+   {
+    "trigger_word": "date",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "asked",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "cancel",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "stay",
+    "sent_id": 9
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Hey! Hold on a minute, hold on a second. Do you think these pearls are nice?",
+   "Speaker 2: I'd really prefer a mountain bike.",
+   "Speaker 1: Janice's birthday is coming up, I want to get her something special. Come in here with me.",
+   "Speaker 2: Whoa, whoa, whoa, wait, whoa. Do you ah, want to get her something special, get her flowers, get her candy, get her gum, girls love gum.",
+   "Speaker 1: That's a good idea, 'Dear Janice have a Hubba-Bubba birthday'. I would like to get her something serious.",
+   "Speaker 2: Oh, you want something serious. Y'know what you should do, you should get her one of those um, barium enemas. Those are dead serious.",
+   "Speaker 1: All right. Look, I'm gonna go in here, and you don't buy me anything ever.",
+   "Speaker 2: No, no, you can't, you can't, okay, you can't, you can't buy her pearls, you just can't, you can't, you can't.",
+   "Speaker 1: Why not?!",
+   "Speaker 2: Oh God. Uh, okay, here's the thing, this is the thing, okay, the thing is...",
+   "Speaker 1: What is the thing?",
+   "Speaker 2: Okay. I went down to the 'Mattress King' showroom and, and I saw Janice, kissing her ex-husband.",
+   "Speaker 1: What?",
+   "Speaker 2: They were in his office.",
+   "Speaker 1: Well she, she wouldn't do that, she's with, she's with me.",
+   "Speaker 2: I'm telling you man, I saw it.",
+   "Speaker 1: Yeah, well, you're wrong! Okay, you're wrong.",
+   "Speaker 2: I'm not wrong! I wish I was. I'm sorry. Bet that barium enema doesn't sound so bad now, huh?"
+  ],
+  [
+   {
+    "trigger_word": "hold on",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "prefer",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "coming up",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "get",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "serious",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "buy",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "pearls",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "went down to",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "saw",
+    "sent_id": 15
+   },
+   {
+    "trigger_word": "wish",
+    "sent_id": 17
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Rachel! Could I have a moment?",
+   "Speaker 2: Yes.",
+   "Speaker 1: I-I was wondering, my niece you see is in from London\u2014well Shropshire really but y\u2019know\u2014well she\u2019s about your age I say. Anyway I have tickets for the opera, Die Fledermaus, and I was wondering if you\u2019d like to keep her company this evening?",
+   "Speaker 2: Sure. You got it. Great!",
+   "Speaker 1: Oh, good.",
+   "Speaker 2: Me, Fledermaus, great. I really\u2014",
+   "Speaker 1: Ohh! Yes of course, thank you, thank you, thank you so very much.",
+   "Speaker 3: So\u2026",
+   "Speaker 2: So?",
+   "Speaker 3: Gloves?",
+   "Speaker 2: Ohh! Right! Right, sorry, I\u2019ll be right back!",
+   "Speaker 3: Uhh, actually y\u2019know what, I kinda\u2014I have to take off.",
+   "Speaker 2: Oh.",
+   "Speaker 3: But, I was curious; do you have any plans for tonight?",
+   "Speaker 2: No! Nothing!",
+   "Speaker 3: I invested in this night-club and it\u2019s opening tonight, would you like to come?",
+   "Speaker 2: Yeah! That would be great!",
+   "Speaker 3: You\u2019re into hardcore S&M right?",
+   "Speaker 2: Well, I-I guess\u2014I\u2026",
+   "Speaker 3: Kidding! I\u2019m gonna get there early, but I\u2019m going to put you on the V.I.P list, okay? Look for me.",
+   "Speaker 2: Yeah, great, you betcha!",
+   "Speaker 1: I almost forget the tickets, didn\u2019t I?",
+   "Speaker 2: What?",
+   "Speaker 1: For you and Emily, tonight, Die Fledermaus.",
+   "Speaker 2: Oh. Oh, right.",
+   "Speaker 1: I think you\u2019ll like it, it has two out of the three tenors.",
+   "Speaker 2: Oh yay!"
+  ],
+  [
+   {
+    "trigger_word": "keep her company",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "thank",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "take off",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "plans",
+    "sent_id": 13
+   },
+   {
+    "trigger_word": "invested",
+    "sent_id": 15
+   },
+   {
+    "trigger_word": "put on",
+    "sent_id": 19
+   },
+   {
+    "trigger_word": "forget",
+    "sent_id": 21
+   },
+   {
+    "trigger_word": "think",
+    "sent_id": 25
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1, Speaker 2: Who is it?",
+   "Speaker 3: Hi! It\u2019s Tom, I\u2019m here to pick up the phone.",
+   "Speaker 1: Whoa! Why do you get to answer the door?",
+   "Speaker 2: Well why shouldn\u2019t I?!",
+   "Speaker 1: Because it\u2019s my apartment!",
+   "Speaker 2: Well, then I get to give him the cell phone.",
+   "Speaker 1: Okay. All right. Good luck explaining all the calls to China.",
+   "Speaker 4: Hi!",
+   "Speaker 1: Wow! How long were we arguing for?",
+   "Speaker 2: You\u2019re not the man who left the cell phone.",
+   "Speaker 4: No that\u2019s my assistant.",
+   "Speaker 2: Is-is he coming?",
+   "Speaker 4: Umm, no.",
+   "Speaker 1: Could you-could you umm, give us one second?",
+   "Speaker 4: Sure!",
+   "Speaker 2: We\u2019ll be right back sir.",
+   "Speaker 4: Sure.",
+   "Speaker 1: Wh-what do we do?",
+   "Speaker 2: I don\u2019t know!",
+   "Speaker 1: Can you believe this? We were waiting for a hot guy and then an even hotter one shows up!",
+   "Speaker 2: I know! What?!",
+   "Speaker 1: Hmm, they just don\u2019t make \u2018em like that anymore!",
+   "Speaker 2: No-no they do but, you just have to wait.",
+   "Speaker 1: Rachel, listen\u2014I mean, if you let me have him then I will really owe you one.",
+   "Speaker 2: All right. All right Phoebe I will let you have him, but you owe me; you owe me big!",
+   "Speaker 1: Yeah! You\u2019re such a great friend!",
+   "Speaker 2: Ohh\u2026",
+   "Speaker 4: So, which one of you lovely ladies am I going to take to dinner huh?",
+   "Speaker 1: Oh that\u2019d be me. Sir. After you.",
+   "Speaker 4: Okay. Okay.",
+   "Speaker 1: Nice!"
+  ],
+  [
+   {
+    "trigger_word": "pick up",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "answer the door",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "give",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "explaining",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "arguing",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "left",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "waiting",
+    "sent_id": 19
+   },
+   {
+    "trigger_word": "shows up",
+    "sent_id": 19
+   },
+   {
+    "trigger_word": "wait",
+    "sent_id": 22
+   },
+   {
+    "trigger_word": "owe",
+    "sent_id": 23
+   },
+   {
+    "trigger_word": "take",
+    "sent_id": 27
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: No!! You can't!!",
+   "Speaker 2: Look, they must be stopped!",
+   "Speaker 1: I am your friend, and I am not gonna let you do this!! You are surprisingly strong!",
+   "Speaker 2: I need juice! People need juice!!",
+   "Speaker 1: Look man!",
+   "Speaker 2: People need juice!",
+   "Speaker 1: Listen to me!!",
+   "Speaker 2: Juice, I need...",
+   "Speaker 1: She's moving on! Okay, if it's not this guy, it's gonna be somebody else! And unless you're thinking about subletting my peep hole, you are going to have to get used to the fact that the relationship is over! Okay, man? It's over.",
+   "Speaker 2: Yeah, okay.",
+   "Speaker 1: Okay.",
+   "Speaker 2: It's just I miss her so much.",
+   "Speaker 1: I know."
+  ],
+  [
+   {
+    "trigger_word": "stopped",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "need",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "Listen",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "subletting",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "miss",
+    "sent_id": 11
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Oh my God! Oh my God!",
+   "Speaker 2: Yeah. We figured when we couldn\u2019t find you, you\u2019d gone home to make up with Rachel. Which is probably what you shoulda done. Huh?",
+   "Speaker 3: You think?! God, I, ah, I\u2019m in hell. I mean what, what am I gonna do? Rachel\u2019s all like, \u2018I love you and, and let\u2019s work on this.\u2019 And all I can think about is, \u2018What is she gonna do? What is she gonna say?\u2019 when I tell her what I did.",
+   "Speaker 1: Well, before we answer that, I think we should address the more important question. How dumb are you?",
+   "Speaker 3: What?! Look, we\u2019re trying to rebuild a relationship here, right. How am I supposed to do that here, without being totally honest with each other?",
+   "Speaker 2: Look, Ross look, I\u2019m on board about this totally honesty thing, I am, just not about stuff that\u2019s gonna get you in trouble.",
+   "Speaker 1: He\u2019s right. Nobody\u2019s gonna benefit, and you\u2019re just gonna hurt her.",
+   "Speaker 2: Yeah, and there won\u2019t be a relationship left to rebuild.",
+   "Speaker 3: Yeah, but don\u2019t you think....",
+   "Speaker 1: All right look, if you absolutely have to tell her, at least wait until the timing\u2019s right. And that\u2019s what deathbeds are for.",
+   "Speaker 3: Yeah, okay.",
+   "Speaker 2: All right, okay, now, we just have to make sure she doesn\u2019t find out some other way. Did you think about the trail?",
+   "Speaker 3: What trail?",
+   "Speaker 2: The trail from the woman you did it with to the woman you hope never finds out who did it! You always have to think about the trail!",
+   "Speaker 3: Oh, I-I don\u2019t think there\u2019s any trail.",
+   "Speaker 1: Okay, okay-okay, ah, Chloe works with that guy Issac. Issac\u2019s sister is Jasmine. And Jasmine works at that massage place with Phoebe. And Phoebe\u2019s friends with Rachel. And that\u2019s the trail, I did it!"
+  ],
+  [
+   {
+    "trigger_word": "figured",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "find",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "make up",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "work on",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "think about",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "address",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "rebuild",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "supposed",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "on board",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "hurt",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "rebuild",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "tell",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "deathbeds",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "make sure",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "find out",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "trail",
+    "sent_id": 13
+   },
+   {
+    "trigger_word": "works",
+    "sent_id": 15
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Hey Pheebs, what-what was the deal with you and Chandler blowing us off before?",
+   "Speaker 2: Yeah! That was so weird, huh?",
+   "Speaker 1: Phoebe, why\u2019d you do it?",
+   "Speaker 2: I didn\u2019t do it! It was Chandler! He\u2019s\u2026 He\u2019s mad at you!",
+   "Speaker 1: What?! Why?!",
+   "Speaker 2: Please, I think you know why.",
+   "Speaker 1: I can\u2019t think of anything.",
+   "Speaker 2: Come on Ross, you\u2019re a paleontologist, dig a little deeper.",
+   "Speaker 1: Wait a minute, is it because Joey and I didn\u2019t invite him to that Knicks game a couple of weeks ago?",
+   "Speaker 2: Do you think that\u2019s something that he\u2019d be mad at you for?",
+   "Speaker 1: I guess it could.",
+   "Speaker 2: Well then I think that\u2019s it.",
+   "Speaker 1: Well, if he\u2019s angry, he really shouldn\u2019t just cover it up. I-I wish he would just tell me the truth.",
+   "Speaker 2: Oh, if that\u2019s what you want you then you really should run his head under hot water and bang his head against a table."
+  ],
+  [
+   {
+    "trigger_word": "blowing off",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "mad",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "know",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "dig",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "invite",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "guess",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "cover up",
+    "sent_id": 12
+   },
+   {
+    "trigger_word": "tell",
+    "sent_id": 12
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Hey!",
+   "Speaker 2: Hey!",
+   "Speaker 3: Hey, man!",
+   "Speaker 4: Hey! Ooh, how was your first day working at the restaurant?",
+   "Speaker 1: Damn!"
+  ],
+  [
+   {
+    "trigger_word": "working",
+    "sent_id": 3
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: WHOAA!!",
+   "Speaker 2: See Joe, that's why your parents told you not to jump on the bed."
+  ],
+  [
+   {
+    "trigger_word": "jump",
+    "sent_id": 1
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Did you know Chandler kissed Rachel?",
+   "Speaker 2: What? When was this?",
+   "Speaker 1: Nineteen Eighty Seven. The weekend you guys visited me at school.",
+   "Speaker 2: Oh my God! That's wild!",
+   "Speaker 3: Yeah, but it was like a million years ago, so it doesn't matter.",
+   "Speaker 1: Well, it matters to me.",
+   "Speaker 3: Why?",
+   "Speaker 1: Because... the night you kissed Rachel was the night I kissed Rachel for the very first time.",
+   "Speaker 3: You kissed her that night too?",
+   "Speaker 2: Two guys in one night? Wow, I thought she became a slut after she got her nose fixed.",
+   "Speaker 3: Seriously, where did this happen?",
+   "Speaker 1: Okay, after you told me she was passed out in our room, I went in there to make sure she was all right. She was lying on my bed, all buried in peoples' coats. Well, I went to kiss her on the forehead, you know. But it was so dark, I accidentally got her lips. I started to pull away, but then I felt her start to kiss me back. It was only for a second, but... it was amazing. And now, now I find out that you kissed her first.",
+   "Speaker 3: Oh wait... What bed did you say she was on?",
+   "Speaker 1: Mine.",
+   "Speaker 3: I'm pretty sure I put her on my bed.",
+   "Speaker 1: No, she was definitely on my bed.",
+   "Speaker 3: Why would I kiss a girl, and then put her on your bed?",
+   "Speaker 1: Well, then who was on my bed?",
+   "Speaker 2: OH! Oh, oh!",
+   "Speaker 1: NO! No, no!",
+   "Speaker 2: YES!",
+   "Speaker 1: You were under the pile of coats?",
+   "Speaker 2: I was the pile of coats!",
+   "Speaker 1: OH MY GOD!",
+   "Speaker 2: You were my Midnight Mystery Kisser?",
+   "Speaker 1: You were my first kiss with Rachel?",
+   "Speaker 2: You were my first kiss ever?",
+   "Speaker 3: What did I marry into?"
+  ],
+  [
+   {
+    "trigger_word": "kissed",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "visited",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "matter",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "kissed",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "passed out",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "lying",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "pull away",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "marry into",
+    "sent_id": 27
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Hey Eddie. Daahh!! What're you doin' here?",
+   "Speaker 2: Nothin' roomie, just watchin' you sleep.",
+   "Speaker 1: Why?",
+   "Speaker 2: Makes me feel um, peaceful, heh-heh, please.",
+   "Speaker 1: I can't sleep now.",
+   "Speaker 2: You want me to sing?",
+   "Speaker 1: No, look, that's it, it's over, I want you out, I want you out of the apartment now.",
+   "Speaker 2: Woah, woah, woah, what're, what're you talkin' about man.",
+   "Speaker 1: Hannibal Lecter...better roommate than you.",
+   "Speaker 2: No. See now I don't think you're being fair. I mean one night you see me and you get scared, I mean, what about all the other nights when you don't see me, huh? What about last night when you went and got a drink of water and I was nice enough to hide behind the door, what's that about, huh?",
+   "Speaker 1: I didn't realize that.",
+   "Speaker 2: Yeah."
+  ],
+  [
+   {
+    "trigger_word": "watchin'",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "feel",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "sleep",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "sing",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "want you out",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "mean",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "hide",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "realize",
+    "sent_id": 10
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Hi, my name is Rachel Green, I have an appointment for Emma.",
+   "Speaker 2: Dr. Gettleman is finishing up with a patient, he should be out shortly.",
+   "Speaker 3: I think you just have a cold, it's definitely not Strep.",
+   "Speaker 4: Thanks doctor.",
+   "Speaker 3: Would you like a lollypop?",
+   "Speaker 4: You even have to ask?! He is alive!"
+  ],
+  [
+   {
+    "trigger_word": "appointment",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "finishing",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "have a cold",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "lollypop",
+    "sent_id": 4
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: I did not know you spoke French.",
+   "Speaker 2: Oui, bien sur je parle Fran?ais! Qu'est-ce que tu penses alors?",
+   "Speaker 1: Oh... you're so sexy!",
+   "Speaker 3: Well, so, will you help me? I really wanna be in this play.",
+   "Speaker 2: Sure! Tout le plaisir est pour moi, mon ami.",
+   "Speaker 1: Seriously stop it, or I'm gonna jump on ya."
+  ],
+  [
+   {
+    "trigger_word": "spoke",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "sexy",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "help",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "jump",
+    "sent_id": 5
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Ok, ok, she's taking the trash out so I can get you out of here but it has to be now, she'll be back any minute.",
+   "Speaker 2: What about my friend Victor?",
+   "Speaker 1: No, only the three of you, any more than that and she'll get suspicious.",
+   "Speaker 2: Alright, let me just get my coat.",
+   "Speaker 1: There isn't time. You must leave everything. They'll take care of you next door.",
+   "Speaker 2: Is it true they have beer?",
+   "Speaker 1: Everything you've heard is true."
+  ],
+  [
+   {
+    "trigger_word": "taking the trash out",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "suspicious",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "leave",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "take care of",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "heard",
+    "sent_id": 6
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Oh my God! That's Monica!!",
+   "Speaker 2: Oh no-no-no! No-no-no-no-no-no-no!",
+   "Speaker 1: You get away from me!! You sick, sick, sick, sick-o!!",
+   "Speaker 3: What's going on?",
+   "Speaker 1: Joey has got a secret peephole!",
+   "Speaker 4: Oh no! No! No! No!",
+   "Speaker 1: Yes! He has a naked picture of Monica! He takes naked pictures of us! And then he eats chicken and looks at them!",
+   "Speaker 1: Look!",
+   "Speaker 3: Dude! That's my sister!",
+   "Speaker 5: Give me that!",
+   "Speaker 6: All right, wait! Just wait. Everybody just calm down. Okay? Let's give our friend Joey a chance to explain why he's such a big pervert!",
+   "Speaker 2: No! I am not a pervert! Okay? It's just\u2026 I just\u2026 Kinda\u2026"
+  ],
+  [
+   {
+    "trigger_word": "get away",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "peephole",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "picture",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "eats",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "wait",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "calm down",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "explain",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "pervert",
+    "sent_id": 11
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: I don't understand, why didn't you help that man?",
+   "Speaker 2: Uhh, cause, uhh, I'm a neurosurgeon and that was clearly a case of, uh, uh, foodal chokage. Alright, look, I got to tell you something.",
+   "Speaker 1: No, no no no, you don't have to tell me anything. You don't have to explain yourself to me. Ooh, who am I to question the great Dr. Drake Remore?",
+   "Speaker 2: But that's what...",
+   "Speaker 1: I should just be happy to be near you.",
+   "Speaker 2: Hey I-",
+   "Speaker 1: Hey what?",
+   "Speaker 2: That's it, just hey. Like at the end of a dance, HEY!  Hey. He-hey."
+  ],
+  [
+   {
+    "trigger_word": "help",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "neurosurgeon",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "tell",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "explain",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "question",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "near",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "dance",
+    "sent_id": 7
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Not to shabby, I got this all off myself\u2026using my wife\u2019s tools. Oh my God!",
+   "Speaker 2: How did you get in there?!",
+   "Speaker 1: You\u2019re messy.",
+   "Speaker 2: Oh no! You weren\u2019t supposed to see this!",
+   "Speaker 1: I married Fred Sanford!",
+   "Speaker 2: No Chandler, you don\u2019t understand! Okay! Okay! Okay! Fine! Now you know. Okay? I\u2019m y\u2019know\u2026I\u2019m sick.",
+   "Speaker 1: No, honey you\u2019re not sick! Look, I don\u2019t love you because you\u2019re organized, I love you in spite of that.",
+   "Speaker 2: Really? You promise you won\u2019t tell anyone?",
+   "Speaker 1: Yes! And look, now that I know if I got some extra stuff lying around can we, can we share the closet.",
+   "Speaker 2: Well\u2026it\u2019s just umm\u2026I\u2019m afraid you might mess it up."
+  ],
+  [
+   {
+    "trigger_word": "got off",
+    "sent_id": 0
+   },
+   {
+    "trigger_word": "messy",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "see",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "married",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "organized",
+    "sent_id": 6
+   },
+   {
+    "trigger_word": "promise",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "stuff",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "share",
+    "sent_id": 8
+   },
+   {
+    "trigger_word": "mess up",
+    "sent_id": 9
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Wow, you look even... more beautiful than you did yesterday.",
+   "Speaker 2: Oof...",
+   "Speaker 1: In fact, ehm... I going to kiss you now.",
+   "Speaker 2: Oh, wait, wait!",
+   "Speaker 1: Yeah, I-I don't, I can't get away with stuff like that. I-I-It sounded sexy in my head, so I...",
+   "Speaker 2: No, no, it's not that. Uhm... Remember when you asked me if I was seeing someone and I said no? Well, uhm... I am. His ... his name is Mike.",
+   "Speaker 1: Oh... oh...",
+   "Speaker 2: Yeah, I should have told you.",
+   "Speaker 1: No... well, yeah.",
+   "Speaker 2: I'm sorry, I'm sorry.",
+   "Speaker 1: Well, i-it's okay. I-I-I understand... Well, s... well, are you happy with this guy?",
+   "Speaker 2: I am happy.",
+   "Speaker 1: Damn it! I-I'm sorry. I-I don't mean that. I-I want you to be happy... But only with me. No, uhm... that's not fair. Uh, who cares, leave him!. Oh, I don't mean that. Yes I do... I'm sorry Uhm, I... I think I should probably uhm... go...",
+   "Speaker 2: Well... but David, just... I just want you to know that... that... you know... telling you this... is one of the hardest things I've ever had to do.",
+   "Speaker 1: Well... just so you know... hearing it wasn't exactly a Vladnik carnival either... Can we at least hug goodbye?",
+   "Speaker 2: Of course, yeah. You know, a kiss on the cheek wouldn't be totally inappropriate...",
+   "Speaker 1: No... no...",
+   "Speaker 2: I mean...",
+   "Speaker 1: In Minsk...",
+   "Speaker 2: Yeah?",
+   "Speaker 1: ...it's uhm... i-it's two on each cheek and uhm... and one on the lips.",
+   "Speaker 2: Well, if that's what they do in Minsk... In New York... it's..."
+  ],
+  [
+   {
+    "trigger_word": "kiss",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "get away with",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "asked",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "told",
+    "sent_id": 7
+   },
+   {
+    "trigger_word": "understand",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "mean",
+    "sent_id": 12
+   },
+   {
+    "trigger_word": "leave",
+    "sent_id": 12
+   },
+   {
+    "trigger_word": "telling",
+    "sent_id": 13
+   },
+   {
+    "trigger_word": "hug goodbye",
+    "sent_id": 14
+   },
+   {
+    "trigger_word": "kiss",
+    "sent_id": 15
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Hey!",
+   "Speaker 2: Hey!",
+   "Speaker 1: Where's Chandler? I wanna wish him good luck on his first day... and I smelled bacon.",
+   "Speaker 2: He just left.",
+   "Speaker 1: Who did?",
+   "Speaker 3: Joey! You never gonna believe it: she called.",
+   "Speaker 1: She did?",
+   "Speaker 3: You got it!",
+   "Speaker 1: I did?",
+   "Speaker 2: What is she talking about?",
+   "Speaker 1: I don't know, but it sounds great.",
+   "Speaker 3: Your agent called. You got that audition.",
+   "Speaker 1: With Lennart Haze?",
+   "Speaker 3: Yes.",
+   "Speaker 1: Oh my god, that is great! That is *** for a play on broadway...and in a real theatre, not that little one underneath the dally like last time.",
+   "Speaker 2: Is it a good play?",
+   "Speaker 1: Well, it must be, because I read and I didn't understand a single word.",
+   "Speaker 3: Yeah, and Lennart Haze is starring in it...",
+   "Speaker 1: Yeah, yeah, and directing.",
+   "Speaker 2: He was so good in that movie of MacBeth.",
+   "Speaker 3: You saw that?",
+   "Speaker 2: No, but...I saw the previews. They played it right before Jackass.",
+   "Speaker 3, Speaker 1: Ah!",
+   "Speaker 1: Yeah, he's done some amazing works.",
+   "Speaker 3: Oh, yeah. Oh, I loved him in those cell phone commercials.",
+   "Speaker 1: I know. When the monkey hits him in the face with that giant rubber phone.",
+   "Speaker 2: Hey! Maybe the monkey will be at the audition!",
+   "Speaker 1: Don't make me more nervous than I already am!"
+  ],
+  [
+   {
+    "trigger_word": "wish",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "smelled",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "left",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "believe",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "called",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "talking",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "sounds",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "called",
+    "sent_id": 11
+   },
+   {
+    "trigger_word": "read",
+    "sent_id": 16
+   },
+   {
+    "trigger_word": "understand",
+    "sent_id": 16
+   },
+   {
+    "trigger_word": "starring in",
+    "sent_id": 17
+   },
+   {
+    "trigger_word": "directing",
+    "sent_id": 18
+   },
+   {
+    "trigger_word": "saw",
+    "sent_id": 20
+   },
+   {
+    "trigger_word": "played",
+    "sent_id": 21
+   },
+   {
+    "trigger_word": "done",
+    "sent_id": 23
+   },
+   {
+    "trigger_word": "loved",
+    "sent_id": 24
+   },
+   {
+    "trigger_word": "hits",
+    "sent_id": 25
+   },
+   {
+    "trigger_word": "nervous",
+    "sent_id": 27
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: Hey.",
+   "Speaker 2: You are not going to believe what I did today!",
+   "Speaker 1: Well it clearly wasn\u2019t showering or shaving.",
+   "Speaker 2: I got good. I played this game all day and now I rule at it! They should change the name of it to Ms. Chandler. Although I-I hope they don\u2019t.",
+   "Speaker 1: Wait a minute, you stayed home all day and played Ms. Pac-Man while I went off to work like some kind of chump?!",
+   "Speaker 2: Uh-huh, and I got all the top ten scores, I erased Phoebe off the board! High five!",
+   "Speaker 1: What is the matter with your hand?",
+   "Speaker 2: Well I\u2019ve been playing it for like eight hours, it\u2019ll loosen up. Come on, check out the scores. Oh, and also look at the initials, they\u2019re dirty words.",
+   "Speaker 1: Chandler, why would you do that?",
+   "Speaker 2: Because it\u2019s awesome.",
+   "Speaker 1: You think this is clever?",
+   "Speaker 2: Well y\u2019know, they only give you three letters, so after A-S-S it is a bit of a challenge.",
+   "Speaker 1: Hey wait a minute, this one isn\u2019t dirty.",
+   "Speaker 2: It is when you put it together with that one.",
+   "Speaker 1: Ah, well if you don\u2019t clear this off, you won\u2019t be getting one of those from me. But Ben\u2019s coming over here tomorrow to play this game, this can\u2019t be there.",
+   "Speaker 2: Come on, he won\u2019t even know what they mean.",
+   "Speaker 1: Chandler! He\u2019s seven; he\u2019s not stupid.",
+   "Speaker 2: Have you talked to him lately?",
+   "Speaker 1: All right, look I\u2019m just gonna unplug it.",
+   "Speaker 2: No-no-no, if you unplug it, I\u2019ll have nothing to show for my day! It would be like I was at work. No! Hey look at that! Look at that, it\u2019s still there! This thing must have some kind of primitive ROM Chip in it or something!",
+   "Speaker 1: Honey you-you got to beat your scores!",
+   "Speaker 2: With the claw?!",
+   "Speaker 1: All right fine. Fine, I\u2019ll do it. I\u2019ve just got to get this off the screen. Carol and Susan are still upset that you taught him pull my finger.",
+   "Speaker 2: Pull my finger\u2014\u2014My hand is messed up."
+  ],
+  [
+   {
+    "trigger_word": "believe",
+    "sent_id": 1
+   },
+   {
+    "trigger_word": "showering",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "shaving",
+    "sent_id": 2
+   },
+   {
+    "trigger_word": "played",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "rule at",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "change hope",
+    "sent_id": 3
+   },
+   {
+    "trigger_word": "stayed",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "played",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "went off",
+    "sent_id": 4
+   },
+   {
+    "trigger_word": "erased off",
+    "sent_id": 5
+   },
+   {
+    "trigger_word": "awesome",
+    "sent_id": 9
+   },
+   {
+    "trigger_word": "think",
+    "sent_id": 10
+   },
+   {
+    "trigger_word": "wait",
+    "sent_id": 12
+   },
+   {
+    "trigger_word": "put it together",
+    "sent_id": 13
+   },
+   {
+    "trigger_word": "clear off",
+    "sent_id": 14
+   },
+   {
+    "trigger_word": "coming over",
+    "sent_id": 14
+   },
+   {
+    "trigger_word": "mean",
+    "sent_id": 15
+   },
+   {
+    "trigger_word": "talked",
+    "sent_id": 17
+   },
+   {
+    "trigger_word": "unplug",
+    "sent_id": 18
+   },
+   {
+    "trigger_word": "get off",
+    "sent_id": 22
+   },
+   {
+    "trigger_word": "taught",
+    "sent_id": 22
+   },
+   {
+    "trigger_word": "messed up",
+    "sent_id": 23
+   }
+  ]
+ ],
+ [
+  [
+   "Speaker 1: That's it, just sign right on the bra.",
+   "Speaker 2: Monica!",
+   "Speaker 1: Don't worry Joe, I won't come next year!"
+  ],
+  [
+   {
+    "trigger_word": "sign",
+    "sent_id": 0
+   }
+  ]
+ ]
+]

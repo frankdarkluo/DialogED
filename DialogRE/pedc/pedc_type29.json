@@ -9666,7 +9666,7 @@
      12
     ],
     "type": [
-     "body_movement"
+     "giving_or_bringing"
     ],
     "offset_speakername": [
      11,
@@ -18662,7 +18662,7 @@
      11
     ],
     "type": [
-     "body_movement"
+     "giving_or_bringing"
     ],
     "offset_speakername": [
      10,
