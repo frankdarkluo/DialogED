@@ -2,12 +2,27 @@ Training with the scrips:
 
 run BiLSTM 
 ```
-python run_classifier.py --lstm_only --bilstm_crf False
+python run_classifier.py --lstm_only
 ```
 
 run BilSTM+CRF
 ```
 python run_classifier.py --lstm_only --bilstm_crf True
+```
+
+run Ours(BiLSTM)
+```
+python run_classifier.py –task_name lstm –encoder_type LSTM –latent_type diffmask –rnn_hidden_size 384
+```
+
+run BERT
+```
+python run_classifier.py –task_name bert –encoder_type Bert –latent_type diffmask
+```
+
+run Ours(BERT)
+```
+python run_classifier.py –task_name bert –encoder_type Bert –latent_type diffmask
 ```
 
 # DialogED
