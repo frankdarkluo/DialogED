@@ -507,16 +507,28 @@ class bertProcessor(DataProcessor):  # bert
             #tokens_a = tokenize(example.text_a, tokenizer)
             for i in range(len(data)):
                 text = ' '.join(data[i][0]).lower()
-                nlp_text = tokenize(text, tokenizer)
-                      
+                nlp_text = tokenize(text.lower(), tokenizer)    
                 utters_len = []
                 for t in data[i][0]:
-                    utters_len.append(len(tokenize(t,tokenizer)))
-                            
+                    utters_len.append(len(tokenize(t,tokenizer)))        
                 labels = ['O' for i in range(len(nlp_text))]
                 for j in range(len(data[i][1])):
                     sent_id = data[i][1][j]['sent_id']
-                    offset = data[i][1][j]['offset']
+                    trigger_word = data[i][1][j]['trigger_word'].lower()
+                    offset = []
+                    sent_with_trigger = data[i][0][sent_id].lower()
+                    sent_with_trigger_tokens = tokenize(sent_with_trigger, tokenizer)
+                    trigger_tokens = tokenize(trigger_word, tokenizer)
+                    for k in range(len(sent_with_trigger_tokens) - len(trigger_tokens) + 1):
+                        match = 0
+                        for g in range(len(trigger_tokens)):
+                            if sent_with_trigger_tokens[k + g] == trigger_tokens[g]:
+                                match += 1
+                        if match == len(trigger_tokens):
+                            offset.append(k)
+                            offset.append(k + match - 1)
+                            break
+
                     if len(data[i][1][j]['type']) == 0:
                         continue
                     e_type = data[i][1][j]['type'][0]
@@ -595,7 +607,7 @@ class bertf1cProcessor(DataProcessor):  # bert (conversational f1)
                       
                 utters_len = []
                 for t in data[i][0]:
-                    utters_len.append((tokenize(t,tokenizer)))
+                    utters_len.append(len(tokenize(t,tokenizer)))
                 
                 # end_index = []
                 # end = 0
@@ -605,14 +617,28 @@ class bertf1cProcessor(DataProcessor):  # bert (conversational f1)
                 temp_text = ""
                 for t in range(len(data[i][0])):
                     temp_text = temp_text + data[i][0][t] + " "
-                    nlp_text = tokenize(temp_text,tokenizer)
+                    nlp_text = tokenize(temp_text.lower(),tokenizer)
 
                             
                     labels = ['O' for i in range(len(nlp_text))]
                     for j in range(len(data[i][1])):
                         sent_id = data[i][1][j]['sent_id']
                         if sent_id <= t: # when the annotations are inside the conversations
-                            offset = data[i][1][j]['offset']
+                            sent_with_trigger = data[i][0][sent_id].lower()
+                            sent_with_trigger_tokens = tokenize(sent_with_trigger, tokenizer)
+                            trigger_word = data[i][1][j]['trigger_word'].lower()
+                            offset = []
+                            trigger_tokens = tokenize(trigger_word, tokenizer)
+                            for k in range(len(sent_with_trigger_tokens) - len(trigger_tokens) + 1):
+                                match = 0
+                                for g in range(len(trigger_tokens)):
+                                    if sent_with_trigger_tokens[k + g] == trigger_tokens[g]:
+                                        match += 1
+                                if match == len(trigger_tokens):
+                                    offset.append(k)
+                                    offset.append(k + match - 1)
+                                    break
+
                             if len(data[i][1][j]['type']) == 0:
                                 continue
                             e_type = data[i][1][j]['type'][0]
@@ -1501,7 +1527,7 @@ def main(args):
             logger.info("dumping embedding file ...")
             np.save(args.embed_f, embedding)
 
-    model = MainSequenceClassification(bert_config, 12, vocab, args)
+    model = MainSequenceClassification(bert_config, 29, vocab, args)
     if args.task_name == 'bert' or args.task_name == 'bertf1c':
         if args.init_checkpoint is not None:
             model.bert.load_state_dict(torch.load(args.init_checkpoint, map_location='cpu'))
