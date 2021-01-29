@@ -946,7 +946,7 @@ class MainSequenceClassification(nn.Module):
                 word_embedding = word_embedding[-1]
                 word_embedding = word_embedding[:,:real_length,:]
                 mask = attention_mask.squeeze()
-                s_labels = labels.squeeze()
+                s_labels = labels.squeeze().long()
 
                 if self.args.bert_only:
                     output = self.dropout(word_embedding)
