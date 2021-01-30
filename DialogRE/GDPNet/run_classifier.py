@@ -386,24 +386,73 @@ class robertaProcessor(DataProcessor):
     def __init__(self):
         random.seed(42)
         self.D = [[], [], []]
+        tokenizer = RobertaTokenizer.from_pretrained('roberta-base')
+        count = 0
         for sid in range(3):
             with open("data/" + ["train.json", "dev.json", "test.json"][sid], "r", encoding="utf8") as f:
                 data = json.load(f)
             if sid == 0:
                 random.shuffle(data)
+            
+            #tokens_a = tokenize(example.text_a, tokenizer)
             for i in range(len(data)):
+                text = ' '+' '.join(data[i][0]).lower()
+                nlp_text = tokenize(text.lower(), tokenizer)    
+                utters_len = []
+                for t in data[i][0]:
+                    utters_len.append(len(tokenize(' '+t.lower(),tokenizer)))  
+                assert sum(utters_len) == len(nlp_text)      
+                labels = ['O' for i in range(len(nlp_text))]
                 for j in range(len(data[i][1])):
-                    rid = []
-                    for k in range(36):
-                        if k + 1 in data[i][1][j]["rid"]:
-                            rid += [1]
+                    sent_id = data[i][1][j]['sent_id']
+                    trigger_word = data[i][1][j]['trigger_word'].lower()
+                    offset = []
+                    sent_with_trigger = data[i][0][sent_id].lower()
+                    sent_with_trigger_tokens = tokenize(sent_with_trigger, tokenizer)
+                    trigger_tokens = tokenize(' '+trigger_word, tokenizer)
+                    for k in range(len(sent_with_trigger_tokens) - len(trigger_tokens) + 1):
+                        match = 0
+                        for g in range(len(trigger_tokens)):
+                            if sent_with_trigger_tokens[k + g] == trigger_tokens[g]:
+                                match += 1
+                        if match == len(trigger_tokens):
+                            offset.append(k)
+                            offset.append(k + match - 1)
+                            break
+                    if len(offset) == 0:
+                        count += 1
+                        break
+
+                    if len(data[i][1][j]['type']) == 0:
+                        continue
+                    e_type = data[i][1][j]['type'][0]
+
+                    if sent_id == 0:
+                        if offset[1] - offset[0] == 0:
+                            labels[offset[0]] = "S-" + e_type
+                        elif offset[1] - offset[0] == 1:
+                            labels[offset[0]] = "B-" + e_type
+                            labels[offset[1]] = "E-" + e_type
                         else:
-                            rid += [0]
-                    d = ['\n'.join(data[i][0]).lower(),
-                         data[i][1][j]["x"].lower(),
-                         data[i][1][j]["y"].lower(),
-                         rid]
-                    self.D[sid] += [d]
+                            labels[offset[0]] = "B-" + e_type
+                            labels[offset[1]] = "E-" + e_type
+                            for z in range(offset[0]+1, offset[1]):
+                                labels[z] = "I-" + e_type
+                    else:
+                        if offset[1] - offset[0] == 0:
+                            labels[sum(utters_len[:sent_id])+offset[0]] = "S-" + e_type
+                        elif offset[1] - offset[0] == 1:
+                            labels[sum(utters_len[:sent_id])+offset[0]] = "B-" + e_type
+                            labels[sum(utters_len[:sent_id])+offset[1]] = "E-" + e_type
+                        else:
+                            labels[sum(utters_len[:sent_id])+offset[0]] = "B-" + e_type
+                            labels[sum(utters_len[:sent_id])+offset[1]] = "E-" + e_type
+                            for m in range(sum(utters_len[:sent_id])+offset[0]+1, sum(utters_len[:sent_id])+offset[1]):
+                                labels[m] = "I-" + e_type
+                
+                d = [text, labels]
+                self.D[sid] += [d]
+        logger.info("the instances throwed is " + str(count))
         logger.info(str(len(self.D[0])) + "," + str(len(self.D[1])) + "," + str(len(self.D[2])))
 
     def get_train_examples(self, data_dir):
@@ -430,10 +479,8 @@ class robertaProcessor(DataProcessor):
         examples = []
         for (i, d) in enumerate(data):
             guid = "%s-%s" % (set_type, i)
-            text_a = tokenization.convert_to_unicode(data[i][0])
-            text_b = tokenization.convert_to_unicode(data[i][1])
-            text_c = tokenization.convert_to_unicode(data[i][2])
-            examples.append(InputExample(guid=guid, text_a=text_a, text_b=text_b, label=data[i][3], text_c=text_c))
+            examples.append(
+                InputExample(guid=guid, text_a=data[i][0], label=data[i][1]))
 
         return examples
 
@@ -442,23 +489,86 @@ class robertaf1cProcessor(DataProcessor):  # roberta (conversational f1)
     def __init__(self):
         random.seed(42)
         self.D = [[], [], []]
-        for sid in range(1, 3):
-            with open("data/" + ["dev.json", "test.json"][sid - 1], "r", encoding="utf8") as f:
+        tokenizer = RobertaTokenizer.from_pretrained('roberta-base')
+        count = 0
+        for sid in range(3):
+            with open("data/" + ["train.json", "dev.json", "test.json"][sid], "r", encoding="utf8") as f:
                 data = json.load(f)
+            if sid == 0:
+                random.shuffle(data)
+                
             for i in range(len(data)):
-                for j in range(len(data[i][1])):
-                    rid = []
-                    for k in range(36):
-                        if k + 1 in data[i][1][j]["rid"]:
-                            rid += [1]
-                        else:
-                            rid += [0]
-                    for l in range(1, len(data[i][0]) + 1):
-                        d = ['\n'.join(data[i][0][:l]).lower(),
-                             data[i][1][j]["x"].lower(),
-                             data[i][1][j]["y"].lower(),
-                             rid]
-                        self.D[sid] += [d]
+                text = ' '+' '.join(data[i][0]).lower()
+                nlp_text = tokenize(text.lower(), tokenizer)
+                      
+                utters_len = []
+                for t in data[i][0]:
+                    utters_len.append(len(tokenize(' '+t.lower(),tokenizer)))
+                assert sum(utters_len) == len(nlp_text)
+                
+                # end_index = []
+                # end = 0
+                # for length in utters_len:
+                #     end += length
+                #     end_index.append(end)
+                temp_text = ""
+                for t in range(len(data[i][0])):
+                    temp_text = temp_text + data[i][0][t] + " "
+                    nlp_text = tokenize(temp_text.lower(),tokenizer)
+
+                            
+                    labels = ['O' for i in range(len(nlp_text))]
+                    for j in range(len(data[i][1])):
+                        sent_id = data[i][1][j]['sent_id']
+                        if sent_id <= t: # when the annotations are inside the conversations
+                            sent_with_trigger = data[i][0][sent_id].lower()
+                            sent_with_trigger_tokens = tokenize(sent_with_trigger, tokenizer)
+                            trigger_word = data[i][1][j]['trigger_word'].lower()
+                            offset = []
+                            trigger_tokens = tokenize(' '+trigger_word, tokenizer)
+                            for k in range(len(sent_with_trigger_tokens) - len(trigger_tokens) + 1):
+                                match = 0
+                                for g in range(len(trigger_tokens)):
+                                    if sent_with_trigger_tokens[k + g] == trigger_tokens[g]:
+                                        match += 1
+                                if match == len(trigger_tokens):
+                                    offset.append(k)
+                                    offset.append(k + match - 1)
+                                    break
+                            if len(offset) == 0:
+                                count += 1
+                                break
+
+                            if len(data[i][1][j]['type']) == 0:
+                                continue
+                            e_type = data[i][1][j]['type'][0]
+
+                            if sent_id == 0:
+                                if offset[1] - offset[0] == 0:
+                                    labels[offset[0]] = "S-" + e_type
+                                elif offset[1] - offset[0] == 1:
+                                    labels[offset[0]] = "B-" + e_type
+                                    labels[offset[1]] = "E-" + e_type
+                                else:
+                                    labels[offset[0]] = "B-" + e_type
+                                    labels[offset[1]] = "E-" + e_type
+                                    for z in range(offset[0]+1, offset[1]):
+                                        labels[z] = "I-" + e_type
+                            else:
+                                if offset[1] - offset[0] == 0:
+                                    labels[sum(utters_len[:sent_id])+offset[0]] = "S-" + e_type
+                                elif offset[1] - offset[0] == 1:
+                                    labels[sum(utters_len[:sent_id])+offset[0]] = "B-" + e_type
+                                    labels[sum(utters_len[:sent_id])+offset[1]] = "E-" + e_type
+                                else:
+                                    labels[sum(utters_len[:sent_id])+offset[0]] = "B-" + e_type
+                                    labels[sum(utters_len[:sent_id])+offset[1]] = "E-" + e_type
+                                    for m in range(sum(utters_len[:sent_id])+offset[0]+1, sum(utters_len[:sent_id])+offset[1]):
+                                        labels[m] = "I-" + e_type
+                    
+                    d = [temp_text, labels]
+                    self.D[sid] += [d]
+        logger.info("the instances throwed is " + str(count))
         logger.info(str(len(self.D[0])) + "," + str(len(self.D[1])) + "," + str(len(self.D[2])))
 
     def get_train_examples(self, data_dir):
@@ -485,10 +595,8 @@ class robertaf1cProcessor(DataProcessor):  # roberta (conversational f1)
         examples = []
         for (i, d) in enumerate(data):
             guid = "%s-%s" % (set_type, i)
-            text_a = tokenization.convert_to_unicode(data[i][0])
-            text_b = tokenization.convert_to_unicode(data[i][1])
-            text_c = tokenization.convert_to_unicode(data[i][2])
-            examples.append(InputExample(guid=guid, text_a=text_a, text_b=text_b, label=data[i][3], text_c=text_c))
+            examples.append(
+                InputExample(guid=guid, text_a=data[i][0], label=data[i][1]))
 
         return examples
 
@@ -1036,20 +1144,27 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
     features = [[]]
     for (ex_index, example) in enumerate(examples):
         if args.task_name == 'roberta' or args.task_name == 'robertaf1c':
-            tokens_a = tokenizer.tokenize(example.text_a)
-            tokens_b = tokenizer.tokenize(example.text_b)
-            tokens_c = tokenizer.tokenize(example.text_c)
-
+            tokens_a = tokenize(example.text_a, tokenizer)
+            tokens_b = []
+            tokens_c = []
             _truncate_seq_tuple(tokens_a, tokens_b, tokens_c, max_seq_length - 2)
 
             tokens = []
-            sents = tokens_a + tokens_b + tokens_c
-            tokens.append('<s>')
-            tokens += sents
-            tokens.append('</s>')
-            input_ids = tokenizer.convert_tokens_to_ids(sents)
-            input_ids = tokenizer.build_inputs_with_special_tokens(input_ids)
-            segment_ids = [0] * (len(tokens_a) + 1) + [1] * (len(tokens_b) + len(tokens_c) + 1)
+            segment_ids = []
+            tokens.append("<s>")
+            segment_ids.append(0)
+            for token in tokens_a:
+                tokens.append(token)
+                segment_ids.append(0)
+            tokens.append("[</s>]")
+            segment_ids.append(0)
+
+
+            input_ids = tokenizer.convert_tokens_to_ids(tokens)
+            label_ids = map_label_to_ids(example.label)
+            label_ids = label_ids[:len(tokens_a)]
+            # [<s>] and [</s>] tokens in label
+            label_ids = [0] + label_ids + [0]
 
         else: # bert
             tokens_a = tokenize(example.text_a, tokenizer)
@@ -1527,7 +1642,7 @@ def main(args):
             logger.info("dumping embedding file ...")
             np.save(args.embed_f, embedding)
 
-    model = MainSequenceClassification(bert_config, 29, vocab, args)
+    model = MainSequenceClassification(bert_config, 12, vocab, args)
     if args.task_name == 'bert' or args.task_name == 'bertf1c':
         if args.init_checkpoint is not None:
             model.bert.load_state_dict(torch.load(args.init_checkpoint, map_location='cpu'))
@@ -1702,6 +1817,34 @@ def main(args):
                 dev_p = f_p * 1.0 / f_total_predict if f_total_predict != 0 else 0
                 dev_r = f_p * 1.0 / f_total_entity if f_total_entity != 0 else 0
                 dev_f1 = 2.0 * dev_p * dev_r / (dev_p + dev_r) if dev_p != 0 or dev_r != 0 else 0
+
+            elif args.encoder_type == 'Bert':
+                for input_ids, input_mask, segment_ids, label_ids in eval_dataloader:
+                    input_ids = input_ids.to(device)
+                    input_mask = input_mask.to(device)
+                    segment_ids = segment_ids.to(device)
+                    label_ids = label_ids.to(device).long()
+                    if args.bert_crf:
+                        with torch.no_grad():
+                            _, preds = model(input_ids, segment_ids, input_mask, labels = label_ids,train=False)
+
+                        input_mask = input_mask.to('cpu')
+                        p, total_predict, total_entity = evaluate_num(preds, label_ids.long(), input_mask, id2label)
+                    elif args.bert_only:
+                        with torch.no_grad():
+                            tmp_eval_loss, logits = model(input_ids, segment_ids, input_mask, labels=label_ids,train=False)
+                        _, preds = torch.max(logits.transpose(1, 2).detach().cpu(), dim=1)
+                        label_ids = label_ids.squeeze().to('cpu')
+                        input_mask = input_mask.to('cpu')
+                        p, total_predict, total_entity = evaluate_num(preds, label_ids, input_mask, id2label)
+
+                    f_p += p
+                    f_total_predict += total_predict
+                    f_total_entity += total_entity
+
+                dev_p = f_p * 1.0 / f_total_predict if f_total_predict != 0 else 0
+                dev_r = f_p * 1.0 / f_total_entity if f_total_entity != 0 else 0
+                dev_f1 = 2.0 * dev_p * dev_r / (dev_p + dev_r) if dev_p != 0 or dev_r != 0 else 0
                    
             print("dev_f1 = {:.4f}, dev_p ={:.4f}, dev_r ={:.4f}".format(dev_f1, dev_p, dev_r))
             if args.f1eval:
@@ -1744,7 +1887,7 @@ if __name__ == "__main__":
                         help="The config json file corresponding to the pre-trained BERT model. \n"
                              "This specifies the model architecture.")
     parser.add_argument("--task_name",
-                        default='lstm',
+                        default='bert',
                         type=str,
                         # required=True,
                         help="The name of the task to train.")
@@ -1789,7 +1932,7 @@ if __name__ == "__main__":
                         type=int,
                         help="Total batch size for eval.")
     parser.add_argument("--learning_rate",
-                        default=0.025,
+                        default=3e-5,
                         type=float,
                         help="The initial learning rate for Adam.")
     parser.add_argument("--num_train_epochs",
@@ -1870,7 +2013,7 @@ if __name__ == "__main__":
     # lsc
     parser.add_argument('--glove_f', type=str, default='data/glove.6B.300d.txt')
     parser.add_argument('--embed_dim', type=int, default=300, help='Word embedding dimension.')
-    parser.add_argument('--encoder_type', type=str, default='LSTM', help='Bert or LSTM')
+    parser.add_argument('--encoder_type', type=str, default='Bert', help='Bert or LSTM')
     parser.add_argument('--embed_f', type=str, default='data/embeddings.npy')
     parser.add_argument('--min_freq', type=int, default=1, help='Minimal word frequency for builiding vocab')
     parser.add_argument('--tune_topk', type=int, default=1e10, help='Only finetune top N word embeddings.')

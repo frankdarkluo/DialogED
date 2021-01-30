@@ -929,16 +929,38 @@ class MainSequenceClassification(nn.Module):
         else: # bert
             if self.args.task_name == 'roberta' or self.args.task_name == 'robertaf1c':
                 word_embedding, pooled_output = self.bert(input_ids.view(-1,seq_length),
-                                        attention_mask.view(-1,seq_length),
-                                        token_type_ids.view(-1,seq_length))
+                                        attention_mask.view(-1,seq_length))
 
                 # due to OS env or lib version variety, Roberta from transformers may output string instead of logits 
                 if type(word_embedding) == str:
                       word_embedding, pooled_output = self.bert(input_ids.view(-1,seq_length),
-                                        attention_mask.view(-1,seq_length),
-                                        token_type_ids.view(-1,seq_length)).values() 
+                                        attention_mask.view(-1,seq_length)).values() 
 
                 word_embedding = word_embedding
+                word_embedding = word_embedding[:,:real_length,:]
+                mask = attention_mask.squeeze()
+                s_labels = labels.squeeze().long()
+
+                if self.args.bert_only:
+                    output = self.dropout(word_embedding)
+                    
+                    logits = self.classifier(output)
+                    length = logits.size()[1]
+
+                    # there is some problem here!
+                    if self.bert_crf:
+                        if train:
+                            loss = self.crf.loss(logits, s_labels[:,:length], mask = mask[:,:length])
+
+                            return loss.sum(), logits
+                        else:
+                            preds = self.crf.decode(logits, mask=mask[:,:length], leading_symbolic = 0)
+
+                            return logits, preds
+                    else: #bert only
+                        criterion = CrossEntropyLoss()
+                        loss = criterion(logits.transpose(1, 2), labels.squeeze()[:, 0:length])
+                        return loss, logits         
             else: # bert
                 word_embedding, pooled_output = self.bert(input_ids.view(-1,seq_length),
                                         token_type_ids.view(-1,seq_length),
@@ -965,12 +987,8 @@ class MainSequenceClassification(nn.Module):
 
                             return logits, preds
                     else: #bert only
-                        logits = self.classifier(self.dropout(pooled_output))
-                        criterion = BCEWithLogitsLoss()
-                        labels = labels.squeeze()[:,:logits.size()[1]]
-                        labels = labels.type(torch.cuda.FloatTensor)
-                        labels = self.sigmoid(labels)
-                        loss = criterion(logits, labels)
+                        criterion = CrossEntropyLoss()
+                        loss = criterion(logits.transpose(1, 2), labels.squeeze()[:, 0:length].long())
                         return loss, logits                    
 
 
