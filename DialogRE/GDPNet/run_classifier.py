@@ -498,12 +498,12 @@ class robertaf1cProcessor(DataProcessor):  # roberta (conversational f1)
                 random.shuffle(data)
                 
             for i in range(len(data)):
-                text = ' '+' '.join(data[i][0]).lower()
-                nlp_text = tokenize(text.lower(), tokenizer)
+                text = ' '+' '.join(data[i][0])
+                nlp_text = tokenizer.tokenize(text)
                       
                 utters_len = []
                 for t in data[i][0]:
-                    utters_len.append(len(tokenize(' '+t.lower(),tokenizer)))
+                    utters_len.append(len(tokenizer.tokenize(' '+t)))
                 assert sum(utters_len) == len(nlp_text)
                 
                 # end_index = []
@@ -511,21 +511,21 @@ class robertaf1cProcessor(DataProcessor):  # roberta (conversational f1)
                 # for length in utters_len:
                 #     end += length
                 #     end_index.append(end)
-                temp_text = ""
+                temp_text = " "
                 for t in range(len(data[i][0])):
                     temp_text = temp_text + data[i][0][t] + " "
-                    nlp_text = tokenize(temp_text.lower(),tokenizer)
+                    nlp_text = tokenizer.tokenize(temp_text)
 
                             
                     labels = ['O' for i in range(len(nlp_text))]
                     for j in range(len(data[i][1])):
                         sent_id = data[i][1][j]['sent_id']
                         if sent_id <= t: # when the annotations are inside the conversations
-                            sent_with_trigger = data[i][0][sent_id].lower()
+                            sent_with_trigger = data[i][0][sent_id]
                             sent_with_trigger_tokens = tokenize(sent_with_trigger, tokenizer)
-                            trigger_word = data[i][1][j]['trigger_word'].lower()
+                            trigger_word = data[i][1][j]['trigger_word']
                             offset = []
-                            trigger_tokens = tokenize(' '+trigger_word, tokenizer)
+                            trigger_tokens = tokenizer.tokenize(' '+trigger_word)
                             for k in range(len(sent_with_trigger_tokens) - len(trigger_tokens) + 1):
                                 match = 0
                                 for g in range(len(trigger_tokens)):
@@ -1144,7 +1144,7 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
     features = [[]]
     for (ex_index, example) in enumerate(examples):
         if args.task_name == 'roberta' or args.task_name == 'robertaf1c':
-            tokens_a = tokenize(example.text_a, tokenizer)
+            tokens_a = tokenizer.tokenize(example.text_a)
             tokens_b = []
             tokens_c = []
             _truncate_seq_tuple(tokens_a, tokens_b, tokens_c, max_seq_length - 2)
@@ -1164,7 +1164,7 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
             label_ids = map_label_to_ids(example.label)
             label_ids = label_ids[:len(tokens_a)]
             # [<s>] and [</s>] tokens in label
-            label_ids = [0] + label_ids + [0]
+            label_ids = [48] + label_ids + [48]
 
         else: # bert
             tokens_a = tokenize(example.text_a, tokenizer)
@@ -1188,7 +1188,7 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
             label_ids = map_label_to_ids(example.label)
             label_ids = label_ids[:len(tokens_a)]
             # [CLS] and [SEP] tokens in label
-            label_ids = [0] + label_ids + [0]
+            label_ids = [48] + label_ids + [48]
 
         # The mask has 1 for real tokens and 0 for padding tokens. Only real
         # tokens are attended to.
@@ -1650,6 +1650,22 @@ def main(args):
         model.half()
     model.to(device)
 
+    if args.encoder_type=="Bert":
+        with open("./data/pedc.json", 'r') as f:
+            all = json.load(f)
+            random.shuffle(all)
+
+        total = len(all)
+        section = total // 6
+        with open("./data/train.json", 'w') as train_f:
+            json.dump(all[:section*4],train_f)
+        with open("./data/dev.json", 'w') as val_f:
+            json.dump(all[section*4:section*5],val_f)
+        with open("./data/test.json", 'w') as test_f:
+            json.dump(all[section*5:],test_f)
+
+    else: pass
+
 
     if args.fp16:
         param_optimizer = [(n, param.clone().detach().to('cpu').float().requires_grad_()) \
@@ -1869,7 +1885,191 @@ def main(args):
     model.load_state_dict(torch.load(os.path.join(args.output_dir, "model.pt")))
 
     if args.do_eval:
-        pass
+        logger.info("***** Running dev evaluation *****")
+        logger.info("  Num examples = %d", len(eval_examples))
+        logger.info("  Batch size = %d", args.eval_batch_size)
+
+        model.eval()
+        eval_loss, eval_accuracy = 0, 0
+        nb_eval_steps, nb_eval_examples = 0, 0
+
+        f_p = 0
+        f_total_predict = 0
+        f_total_entity = 0
+        if args.encoder_type == 'LSTM':
+            for input_ids, input_mask, segment_ids, label_ids, pos_ids in eval_dataloader:
+                input_ids = input_ids.to(device)
+                input_mask = input_mask.to(device)
+                segment_ids = segment_ids.to(device)
+                label_ids = label_ids.to(device)
+                pos_ids = pos_ids.to(device)
+                if args.bilstm_crf:
+                    with torch.no_grad():
+                        _, preds = model(input_ids, segment_ids, input_mask, pos_ids=pos_ids, labels=label_ids,
+                                         train=False)
+
+                    input_mask = input_mask.to('cpu')
+                    p, total_predict, total_entity = evaluate_num(preds, label_ids, input_mask, id2label)
+                    # print("p = {}, total_p ={}, total_e ={}".format(p, total_predict, total_entity))
+                else:  # bilstm_only
+                    with torch.no_grad():
+                        tmp_eval_loss, logits = model(input_ids, segment_ids, input_mask, pos_ids=pos_ids,
+                                                      labels=label_ids)
+
+                    _, preds = torch.max(logits.transpose(1, 2).detach().cpu(), dim=1)
+                    label_ids = label_ids.squeeze().to('cpu')
+                    input_mask = input_mask.to('cpu')
+                    p, total_predict, total_entity = evaluate_num(preds, label_ids, input_mask, id2label)
+
+                f_p += p
+                f_total_predict += total_predict
+                f_total_entity += total_entity
+
+            dev_p = f_p * 1.0 / f_total_predict if f_total_predict != 0 else 0
+            dev_r = f_p * 1.0 / f_total_entity if f_total_entity != 0 else 0
+            dev_f1 = 2.0 * dev_p * dev_r / (dev_p + dev_r) if dev_p != 0 or dev_r != 0 else 0
+
+        elif args.encoder_type == 'Bert':
+            for input_ids, input_mask, segment_ids, label_ids in eval_dataloader:
+                input_ids = input_ids.to(device)
+                input_mask = input_mask.to(device)
+                segment_ids = segment_ids.to(device)
+                label_ids = label_ids.to(device).long()
+                if args.bert_crf:
+                    with torch.no_grad():
+                        _, preds = model(input_ids, segment_ids, input_mask, labels=label_ids, train=False)
+
+                    input_mask = input_mask.to('cpu')
+                    p, total_predict, total_entity = evaluate_num(preds, label_ids.long(), input_mask, id2label)
+                elif args.bert_only:
+                    with torch.no_grad():
+                        tmp_eval_loss, logits = model(input_ids, segment_ids, input_mask, labels=label_ids, train=False)
+                    _, preds = torch.max(logits.transpose(1, 2).detach().cpu(), dim=1)
+                    label_ids = label_ids.squeeze().to('cpu')
+                    input_mask = input_mask.to('cpu')
+                    p, total_predict, total_entity = evaluate_num(preds, label_ids, input_mask, id2label)
+
+                f_p += p
+                f_total_predict += total_predict
+                f_total_entity += total_entity
+
+            dev_p = f_p * 1.0 / f_total_predict if f_total_predict != 0 else 0
+            dev_r = f_p * 1.0 / f_total_entity if f_total_entity != 0 else 0
+            dev_f1 = 2.0 * dev_p * dev_r / (dev_p + dev_r) if dev_p != 0 or dev_r != 0 else 0
+
+        print("dev_f1 = {:.4f}, dev_p ={:.4f}, dev_r ={:.4f}".format(dev_f1, dev_p, dev_r))
+        if args.f1eval:
+            result = {'f1': dev_f1}
+            result['precision'] = dev_p
+            result['recall'] = dev_r
+            logger.info("***** Eval results *****")
+            logger.info(" f1 = %s", str(result['f1']))
+            with open(os.path.join(args.output_dir, 'dev_result.json'), 'w', encoding='utf8') as of:
+                json.dump(result, of, indent=2, ensure_ascii=False)
+
+        eval_examples = processor.get_test_examples(args.data_dir)
+        if args.encoder_type == 'LSTM':
+            if args.task_name == "lstm":
+                eval_features = convert_examples_to_feats_lstm(eval_examples, args.max_seq_length, vocab,
+                                                               args.test_feat_pkl, args.language)
+            elif args.task_name == "lstmf1c":
+                eval_features = convert_examples_to_feats_lstm(eval_examples, args.max_seq_length, vocab,
+                                                               args.test_feat_c_pkl, args.language)
+
+            eval_data = read_lstm_features(eval_features)
+        else:
+            eval_features = convert_examples_to_features(
+                eval_examples, label_list, args.max_seq_length, tokenizer, args)
+
+            eval_data = read_bert_features(eval_features)
+
+        logger.info("***** Running test evaluation *****")
+        logger.info("  Num examples = %d", len(eval_examples))
+        logger.info("  Batch size = %d", args.eval_batch_size)
+
+        if args.local_rank == -1:
+            eval_sampler = SequentialSampler(eval_data)
+        else:
+            eval_sampler = DistributedSampler(eval_data)
+        eval_dataloader = DataLoader(eval_data, sampler=eval_sampler, batch_size=args.eval_batch_size)
+
+        model.eval()
+        eval_loss, eval_accuracy = 0, 0
+        nb_eval_steps, nb_eval_examples = 0, 0
+
+        f_p = 0
+        f_total_predict = 0
+        f_total_entity = 0
+        if args.encoder_type == 'LSTM':
+            for input_ids, input_mask, segment_ids, label_ids, pos_ids in eval_dataloader:
+                input_ids = input_ids.to(device)
+                input_mask = input_mask.to(device)
+                segment_ids = segment_ids.to(device)
+                label_ids = label_ids.to(device)
+                pos_ids = pos_ids.to(device)
+                if args.bilstm_crf:
+                    with torch.no_grad():
+                        _, preds = model(input_ids, segment_ids, input_mask, pos_ids=pos_ids, labels=label_ids,
+                                         train=False)
+
+                    input_mask = input_mask.to('cpu')
+                    p, total_predict, total_entity = evaluate_num(preds, label_ids, input_mask, id2label)
+                    # print("p = {}, total_p ={}, total_e ={}".format(p, total_predict, total_entity))
+                else:  # bilstm_only
+                    with torch.no_grad():
+                        tmp_eval_loss, logits = model(input_ids, segment_ids, input_mask, pos_ids=pos_ids,
+                                                      labels=label_ids)
+
+                    _, preds = torch.max(logits.transpose(1, 2).detach().cpu(), dim=1)
+                    label_ids = label_ids.squeeze().to('cpu')
+                    input_mask = input_mask.to('cpu')
+                    p, total_predict, total_entity = evaluate_num(preds, label_ids, input_mask, id2label)
+
+                f_p += p
+                f_total_predict += total_predict
+                f_total_entity += total_entity
+
+            test_p = f_p * 1.0 / f_total_predict if f_total_predict != 0 else 0
+            test_r = f_p * 1.0 / f_total_entity if f_total_entity != 0 else 0
+            test_f1 = 2.0 * test_p * test_r / (test_p + test_r) if test_p != 0 or test_r != 0 else 0
+
+        elif args.encoder_type == 'Bert':
+            for input_ids, input_mask, segment_ids, label_ids in eval_dataloader:
+                input_ids = input_ids.to(device)
+                input_mask = input_mask.to(device)
+                segment_ids = segment_ids.to(device)
+                label_ids = label_ids.to(device).long()
+                if args.bert_crf:
+                    with torch.no_grad():
+                        _, preds = model(input_ids, segment_ids, input_mask, labels=label_ids, train=False)
+
+                    input_mask = input_mask.to('cpu')
+                    p, total_predict, total_entity = evaluate_num(preds, label_ids.long(), input_mask, id2label)
+                elif args.bert_only:
+                    with torch.no_grad():
+                        tmp_eval_loss, logits = model(input_ids, segment_ids, input_mask, labels=label_ids, train=False)
+                    _, preds = torch.max(logits.transpose(1, 2).detach().cpu(), dim=1)
+                    label_ids = label_ids.squeeze().to('cpu')
+                    input_mask = input_mask.to('cpu')
+                    p, total_predict, total_entity = evaluate_num(preds, label_ids, input_mask, id2label)
+
+                f_p += p
+                f_total_predict += total_predict
+                f_total_entity += total_entity
+
+            test_p = f_p * 1.0 / f_total_predict if f_total_predict != 0 else 0
+            test_r = f_p * 1.0 / f_total_entity if f_total_entity != 0 else 0
+            test_f1 = 2.0 * test_p * dev_r / (test_p + test_r) if test_p != 0 or test_r != 0 else 0
+
+        print("test_f1 = {:.4f}, test_p ={:.4f}, test_r ={:.4f}".format(test_f1, test_p, test_r))
+        if args.f1eval:
+            result = {'f1': test_f1}
+            result['precision'] = test_p
+            result['recall'] = test_r
+            logger.info("***** Eval results *****")
+            logger.info(" f1 = %s", str(result['f1']))
+            with open(os.path.join(args.output_dir, 'test_result.json'), 'w', encoding='utf8') as of:
+                json.dump(result, of, indent=2, ensure_ascii=False)
 
 
 if __name__ == "__main__":

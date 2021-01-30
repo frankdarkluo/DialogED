@@ -959,7 +959,7 @@ class MainSequenceClassification(nn.Module):
                             return logits, preds
                     else: #bert only
                         criterion = CrossEntropyLoss()
-                        loss = criterion(logits.transpose(1, 2), labels.squeeze()[:, 0:length])
+                        loss = criterion(logits.transpose(1, 2), labels.squeeze()[:, 0:length].long())
                         return loss, logits         
             else: # bert
                 word_embedding, pooled_output = self.bert(input_ids.view(-1,seq_length),
